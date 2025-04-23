@@ -1,0 +1,5 @@
+//file mixin dung de viet nhung khoi style chung va tai su dung no
+
+@mixin radius_common($radius: 10px) {
+  border-radius: $radius;
+}
