@@ -1,0 +1,14 @@
+@import '@styles/mixin.module.scss';
+
+.btn {
+  @include btn(30px, 30px, 0px);
+}
+
+.btn2 {
+  @include btn(44px, 44px, 50%);
+}
+
+.btn3 {
+  @include btn(200px, 30px, 0px, #000);
+  color: #fff;
+}
