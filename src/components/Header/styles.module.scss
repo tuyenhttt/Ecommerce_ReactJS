@@ -13,7 +13,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 1250px;
+  width: 1000px;
   height: 83px;
 }
 
@@ -32,7 +32,7 @@
 .boxIcon {
   @include radius_common(50%);
   @include flex_box_custom(center, center, 5px);
-  background-color: $white_color;
+
   width: 26px;
   height: 26px;
 }
