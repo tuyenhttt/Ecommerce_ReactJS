@@ -2,7 +2,7 @@ import BoxIcon from './BoxIcon/BoxIcon';
 import { dataBoxIcon, dataMenu } from './constant';
 import Menu from './Menu/Menu';
 import styles from './styles.module.scss';
-import Logo from '@icons/images/logo.png';
+import Logo from '../../assets/images/logo.png';
 
 function MyHeader() {
   const {

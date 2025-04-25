@@ -1,13 +1,10 @@
-import MainLayout from '@components/Layout/Layout';
-import MyHeader from '@components/Header/Header';
+import HomePage from '@components/HomePage/HomePage';
 
 function App() {
   return (
     <div>
       <>
-        <MainLayout>
-          <MyHeader />
-        </MainLayout>
+        <HomePage />
       </>
     </div>
   );
