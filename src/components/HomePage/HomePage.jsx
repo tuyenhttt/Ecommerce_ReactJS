@@ -1,6 +1,10 @@
 import Banner from '@components/Banner/Banner';
 import MyHeader from '@components/Header/Header';
 import styles from './styles.module.scss';
+import AdvanceHeading from '@components/AdvanceHeading/AdvanceHeading';
+import Info from '@components/Info/Info';
+import HeadingListProduct from '@components/HeadingListProduct/HeadingListProduct';
+import MyButton from '@components/Button/Button';
 
 function HomePage() {
   const { container } = styles;
@@ -9,6 +13,9 @@ function HomePage() {
       <div className={container}>
         <MyHeader />
         <Banner />
+        <Info />
+        <AdvanceHeading />
+        <HeadingListProduct />
       </div>
     </div>
   );

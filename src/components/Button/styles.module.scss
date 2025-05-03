@@ -7,11 +7,14 @@
   font-size: 14px;
   font-weight: 500;
   cursor: pointer;
+  position: relative;
+  z-index: 10;
 
   &:hover {
     background-color: transparent;
     color: $primary_color;
     border: 1px solid $primary_color;
     transition: background-color 300ms;
+    cursor: pointer;
   }
 }
