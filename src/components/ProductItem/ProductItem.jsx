@@ -10,15 +10,8 @@ function ProductItem({ src, prevSrc, name, price }) {
   return (
     <div>
       <div className={boxImg}>
-        <img
-          src='https://down-vn.img.susercontent.com/file/vn-11134207-7ra0g-m7zg63azuruv70.webp'
-          alt=''
-        />
-        <img
-          src='https://down-vn.img.susercontent.com/file/vn-11134207-7ra0g-m7zfbkjxqukkf8.webp'
-          alt=''
-          className={showImageHover}
-        />
+        <img src={src} alt='' />
+        <img src={prevSrc} alt='' className={showImageHover} />
         <div className={showFncHover}>
           <div>
             <div className={boxIcon}>
@@ -37,8 +30,8 @@ function ProductItem({ src, prevSrc, name, price }) {
           </div>
         </div>
       </div>
-      <div className={title}>10K Yellow Gold</div>
-      <div className={priceCl}>120$</div>
+      <div className={title}>{name}</div>
+      <div className={priceCl}>{price}</div>
     </div>
   );
 }
