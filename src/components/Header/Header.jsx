@@ -1,7 +1,10 @@
+import useScrollHandling from '@/hooks/useScrollHandling';
 import BoxIcon from './BoxIcon/BoxIcon';
 import { dataBoxIcon, dataMenu } from './constant';
 import Menu from './Menu/Menu';
 import styles from './styles.module.scss';
+import { useEffect, useState } from 'react';
+import classNames from 'classnames';
 
 function MyHeader() {
   const {
@@ -10,10 +13,26 @@ function MyHeader() {
     containerHeader,
     containerBox,
     container,
+    fixedHeader,
+    topHeader,
   } = styles;
 
+  const { scrollPosition } = useScrollHandling();
+  const [fixedPosition, setFixedPosition] = useState(false);
+
+  console.log(scrollPosition);
+
+  useEffect(() => {
+    // setFixedPosition(scrollPosition > 80 ? true : false);
+    setFixedPosition(scrollPosition > 80);
+  }, [scrollPosition]);
+
   return (
-    <div className={container}>
+    <div
+      className={classNames(container, topHeader, {
+        [fixedHeader]: fixedPosition,
+      })}
+    >
       <div className={containerHeader}>
         <div className={containerBox}>
           <div className={containerBoxIcon}>
