@@ -32,7 +32,7 @@ function MyHeader() {
         </div>
         <div>
           <img
-            src={Logo}
+            src='https://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/MINI_logo.svg/500px-MINI_logo.svg.png'
             alt='logo'
             style={{
               width: '153px',
