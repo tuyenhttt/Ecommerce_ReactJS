@@ -26,9 +26,6 @@ function MyFooter() {
           Guaranteed safe checkout
         </p>
         <img
-          style={{
-            marginTop: '20px',
-          }}
           src='https://xstore.b-cdn.net/elementor2/marseille04/wp-content/uploads/sites/2/elementor/thumbs/Icons-123-pzks3go5g30b2zz95xno9hgdw0h3o8xu97fbaqhtb6.png'
           alt=''
         />
