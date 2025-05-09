@@ -6,7 +6,7 @@ function Banner() {
   return (
     <div className={container}>
       <div className={content}>
-        <h1 className={title}>STORE DEMO</h1>
+        <h1 className={title}>MINI STORE</h1>
         <div className={description}>
           Make yours celebrations even more special this years with beautiful
         </div>

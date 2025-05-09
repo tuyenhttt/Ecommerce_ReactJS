@@ -15,7 +15,6 @@
 .content {
   @include flex_box_custom(center, center, 10px);
   flex-direction: column;
-  margin-top: 200px;
 }
 
 .title {

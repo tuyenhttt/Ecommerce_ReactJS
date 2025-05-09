@@ -3,8 +3,9 @@ import BoxIcon from './BoxIcon/BoxIcon';
 import { dataBoxIcon, dataMenu } from './constant';
 import Menu from './Menu/Menu';
 import styles from './styles.module.scss';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import classNames from 'classnames';
+import { SideBarContext } from '@/contexts/SideBarProvider';
 
 function MyHeader() {
   const {
@@ -20,7 +21,7 @@ function MyHeader() {
   const { scrollPosition } = useScrollHandling();
   const [fixedPosition, setFixedPosition] = useState(false);
 
-  console.log(scrollPosition);
+  const { isOpen, setIsOpen } = useContext(SideBarContext);
 
   useEffect(() => {
     // setFixedPosition(scrollPosition > 80 ? true : false);
@@ -62,7 +63,12 @@ function MyHeader() {
           <div className={containerMenu}>
             {dataMenu.slice(3, dataMenu.length).map((item, index) => {
               return (
-                <Menu key={index} content={item.content} href={item.href} />
+                <Menu
+                  key={index}
+                  content={item.content}
+                  href={item.href}
+                  setIsOpen={setIsOpen}
+                />
               );
             })}
           </div>
