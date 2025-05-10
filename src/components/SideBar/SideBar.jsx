@@ -3,6 +3,7 @@ import styles from './styles.module.scss';
 import { SideBarContext } from '@/contexts/SideBarProvider';
 import classNames from 'classnames';
 import { IoClose } from 'react-icons/io5';
+import Login from '@components/ContentSideBar/LogIn/Login';
 
 function SideBar() {
   const { container, overlay, sideBar, slideSideBar, boxIocn } = styles;
@@ -29,7 +30,7 @@ function SideBar() {
             <IoClose onClick={handleToggle} />
           </div>
         )}
-        Sidebar
+        <Login />
       </div>
     </div>
   );
