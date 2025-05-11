@@ -1,25 +1,26 @@
 import HeaderSideBar from '@components/ContentSideBar/components/HeaderSideBar/HeaderSideBar';
-import { TfiReload } from 'react-icons/tfi';
-import styles from './styles.module.scss';
 import ItemProduct from '@components/ContentSideBar/components/ItemProduct/ItemProduct';
+import { FaRegHeart } from 'react-icons/fa';
+import styles from './styles.module.scss';
 import MyButton from '@components/Button/Button';
 
-function Compare() {
+function WishList() {
   const { container, buttonWrapper } = styles;
   return (
     <div className={container}>
       <div>
         <HeaderSideBar
-          icon={<TfiReload style={{ fontSize: '30px' }} />}
-          title={'COMPARE'}
+          icon={<FaRegHeart style={{ fontSize: '20px' }} />}
+          title={'WISHLIST'}
         />
         <ItemProduct />
       </div>
       <div className={buttonWrapper}>
-        <MyButton content={'VIEW COMPARE'} />
+        <MyButton content={'VIEW WISHLIST'} />
+        <MyButton content={'ADD ALL TO CART'} isPrimary={false} />
       </div>
     </div>
   );
 }
 
-export default Compare;
+export default WishList;
