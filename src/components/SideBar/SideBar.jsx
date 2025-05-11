@@ -4,12 +4,29 @@ import { SideBarContext } from '@/contexts/SideBarProvider';
 import classNames from 'classnames';
 import { IoClose } from 'react-icons/io5';
 import Login from '@components/ContentSideBar/LogIn/Login';
+import Compare from '@components/ContentSideBar/Compare/Compare';
 
 function SideBar() {
   const { container, overlay, sideBar, slideSideBar, boxIocn } = styles;
-  const { isOpen, setIsOpen } = useContext(SideBarContext);
+  const { isOpen, setIsOpen, type } = useContext(SideBarContext);
   const handleToggle = () => {
     setIsOpen(!isOpen);
+  };
+
+  const handleRenderContent = () => {
+    switch (type) {
+      case 'login':
+        return <Login />;
+      case 'compare':
+        return <Compare />;
+      case 'wishlist':
+        return 'wishlist';
+      case 'card':
+        return 'card';
+
+      default:
+        return <Login />;
+    }
   };
 
   return (
@@ -30,7 +47,7 @@ function SideBar() {
             <IoClose onClick={handleToggle} />
           </div>
         )}
-        <Login />
+        {handleRenderContent()}
       </div>
     </div>
   );

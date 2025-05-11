@@ -6,6 +6,9 @@ import styles from './styles.module.scss';
 import { useContext, useEffect, useState } from 'react';
 import classNames from 'classnames';
 import { SideBarContext } from '@/contexts/SideBarProvider';
+import { TfiReload } from 'react-icons/tfi';
+import { FaRegHeart } from 'react-icons/fa';
+import { LuShoppingCart } from 'react-icons/lu';
 
 function MyHeader() {
   const {
@@ -21,7 +24,12 @@ function MyHeader() {
   const { scrollPosition } = useScrollHandling();
   const [fixedPosition, setFixedPosition] = useState(false);
 
-  const { isOpen, setIsOpen } = useContext(SideBarContext);
+  const { setIsOpen, setType } = useContext(SideBarContext);
+
+  const handleOpenSideBar = type => {
+    setIsOpen(true);
+    setType(type);
+  };
 
   useEffect(() => {
     // setFixedPosition(scrollPosition > 80 ? true : false);
@@ -63,19 +71,29 @@ function MyHeader() {
           <div className={containerMenu}>
             {dataMenu.slice(3, dataMenu.length).map((item, index) => {
               return (
-                <Menu
-                  key={index}
-                  content={item.content}
-                  href={item.href}
-                  setIsOpen={setIsOpen}
-                />
+                <Menu key={index} content={item.content} href={item.href} />
               );
             })}
           </div>
           <div className={containerBoxIcon}>
-            {dataBoxIcon.slice(3, dataBoxIcon.length).map((item, index) => {
-              return <BoxIcon key={index} type={item.type} href={item.href} />;
-            })}
+            <TfiReload
+              style={{
+                fontSize: '25px',
+              }}
+              onClick={() => handleOpenSideBar('compare')}
+            />
+            <FaRegHeart
+              style={{
+                fontSize: '25px',
+              }}
+              onClick={() => handleOpenSideBar('wishlist')}
+            />
+            <LuShoppingCart
+              style={{
+                fontSize: '25px',
+              }}
+              onClick={() => handleOpenSideBar('card')}
+            />
           </div>
         </div>
       </div>
