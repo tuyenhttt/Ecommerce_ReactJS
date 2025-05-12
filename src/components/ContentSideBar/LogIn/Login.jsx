@@ -3,13 +3,15 @@ import styles from './styles.module.scss';
 import MyButton from '@components/Button/Button';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { ToastContainer } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 import { useState } from 'react';
+import { register } from '@/apis/authService';
 
 function Login() {
   const { container, title, boxRememberMe, lostPassword, buttonWrapper } =
     styles;
   const [isRegister, setIsRegister] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const formik = useFormik({
     initialValues: {
@@ -30,8 +32,21 @@ function Login() {
             .required('Confirm password is required')
         : Yup.string().notRequired(),
     }),
-    onSubmit: values => {
-      console.log('Login success:', values);
+    onSubmit: async values => {
+      if (isLoading) return;
+      if (isRegister) {
+        const { email: username, password } = values;
+        setIsLoading(true);
+        await register({ username, password })
+          .then(res => {
+            toast.success(res.data.message);
+            setIsLoading(false);
+          })
+          .catch(err => {
+            toast.error(err.response.data.message);
+            setIsLoading(false);
+          });
+      }
     },
     validateOnBlur: true,
     validateOnChange: false,
@@ -44,7 +59,9 @@ function Login() {
 
   return (
     <div className={container}>
-      <div className={title}>{isRegister ? 'SIGN UP' : 'SIGN IN'}</div>
+      <div className={title}>
+        {isLoading ? 'LOADING...' : isRegister ? 'SIGN UP' : 'SIGN IN'}
+      </div>
 
       <form onSubmit={formik.handleSubmit}>
         <InputCommon
@@ -80,7 +97,12 @@ function Login() {
         )}
 
         <div className={buttonWrapper}>
-          <MyButton content={isRegister ? 'SIGN UP' : 'LOGIN'} type='submit' />
+          <MyButton
+            content={
+              isLoading ? 'LOADING...' : isRegister ? 'SIGN UP' : 'LOGIN'
+            }
+            type='submit'
+          />
         </div>
       </form>
       <div className={buttonWrapper}>
