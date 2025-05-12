@@ -1,24 +1,105 @@
 import InputCommon from '@components/InputCommon/InputCommon';
 import styles from './styles.module.scss';
 import MyButton from '@components/Button/Button';
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
+import { ToastContainer } from 'react-toastify';
+import { useState } from 'react';
 
 function Login() {
   const { container, title, boxRememberMe, lostPassword, buttonWrapper } =
     styles;
+  const [isRegister, setIsRegister] = useState(false);
+
+  const formik = useFormik({
+    initialValues: {
+      email: '',
+      password: '',
+      cfmpassword: '',
+    },
+    validationSchema: Yup.object({
+      email: Yup.string()
+        .email('Invalid email address')
+        .required('Email is required'),
+      password: Yup.string()
+        .min(6, 'Password must be at least 6 characters')
+        .required('Password is required'),
+      cfmpassword: isRegister
+        ? Yup.string()
+            .oneOf([Yup.ref('password'), null], 'Passwords not match')
+            .required('Confirm password is required')
+        : Yup.string().notRequired(),
+    }),
+    onSubmit: values => {
+      console.log('Login success:', values);
+    },
+    validateOnBlur: true,
+    validateOnChange: false,
+  });
+
+  const handleToggle = () => {
+    setIsRegister(!isRegister);
+    formik.resetForm();
+  };
+
   return (
     <div className={container}>
-      <div className={title}>SIGN IN</div>
-      <InputCommon label='Email' type='text' isRequired />
-      <InputCommon label='Password' type='password' isRequired />
-      <div className={boxRememberMe}>
-        <input type='checkbox' />
-        <span>Remember me</span>
-      </div>
+      <div className={title}>{isRegister ? 'SIGN UP' : 'SIGN IN'}</div>
 
+      <form onSubmit={formik.handleSubmit}>
+        <InputCommon
+          id='email'
+          label='Email'
+          type='text'
+          isRequired
+          formik={formik}
+        />
+        <InputCommon
+          id='password'
+          label='Password'
+          type='password'
+          isRequired
+          formik={formik}
+        />
+
+        {isRegister && (
+          <InputCommon
+            id='cfmpassword'
+            label='Confirm Password'
+            type='password'
+            isRequired
+            formik={formik}
+          />
+        )}
+
+        {!isRegister && (
+          <div className={boxRememberMe}>
+            <input type='checkbox' />
+            <span>Remember me</span>
+          </div>
+        )}
+
+        <div className={buttonWrapper}>
+          <MyButton content={isRegister ? 'SIGN UP' : 'LOGIN'} type='submit' />
+        </div>
+      </form>
       <div className={buttonWrapper}>
-        <MyButton content={'LOGIN '} />
+        <MyButton
+          content={
+            isRegister ? 'Already have an account?' : 'Dont have an account'
+          }
+          type='submit'
+          isPrimary={false}
+          style={{
+            marginTop: '20px',
+          }}
+          onClick={handleToggle}
+        />
       </div>
-      <div className={lostPassword}>Lost your password</div>
+      {!isRegister && <div className={lostPassword}>Lost your password</div>}
+
+      {/* Toast container */}
+      <ToastContainer position='top-right' autoClose={2000} />
     </div>
   );
 }
