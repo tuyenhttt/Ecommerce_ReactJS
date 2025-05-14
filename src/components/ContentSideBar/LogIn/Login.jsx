@@ -4,8 +4,9 @@ import MyButton from '@components/Button/Button';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { toast, ToastContainer } from 'react-toastify';
-import { useState } from 'react';
-import { register } from '@/apis/authService';
+import { useEffect, useState } from 'react';
+import { register, signIn } from '@/apis/authService';
+import Cookies from 'js-cookie';
 
 function Login() {
   const { container, title, boxRememberMe, lostPassword, buttonWrapper } =
@@ -34,9 +35,10 @@ function Login() {
     }),
     onSubmit: async values => {
       if (isLoading) return;
+
+      const { email: username, password } = values;
+      setIsLoading(true);
       if (isRegister) {
-        const { email: username, password } = values;
-        setIsLoading(true);
         await register({ username, password })
           .then(res => {
             toast.success(res.data.message);
@@ -44,6 +46,19 @@ function Login() {
           })
           .catch(err => {
             toast.error(err.response.data.message);
+            setIsLoading(false);
+          });
+      }
+      if (!isRegister) {
+        await signIn({ username, password })
+          .then(res => {
+            setIsLoading(false);
+            const { id, token, refreshToken } = res.data;
+
+            Cookies.set('token', token);
+            Cookies.set('refreshToken', refreshToken);
+          })
+          .catch(err => {
             setIsLoading(false);
           });
       }
@@ -56,6 +71,8 @@ function Login() {
     setIsRegister(!isRegister);
     formik.resetForm();
   };
+
+  useEffect(() => {});
 
   return (
     <div className={container}>
