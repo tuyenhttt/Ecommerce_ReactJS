@@ -3,6 +3,8 @@ import MainLayout from '@components/Layout/Layout';
 import styles from './styles.module.scss';
 import { Link, useNavigate } from 'react-router-dom';
 import Banner from '@/pages/OurShop/components/Banner';
+import { OurShopProvider } from '@contexts/OurShopProvider';
+import Filter from '@/pages/OurShop/components/Filter';
 
 const OurShop = () => {
   const { container, functionBox, backLink } = styles;
@@ -11,8 +13,9 @@ const OurShop = () => {
   const handleBackPreviousPage = () => {
     navigate(-1);
   };
+
   return (
-    <>
+    <OurShopProvider>
       <MyHeader />
       <MainLayout>
         <div className={container}>
@@ -26,8 +29,12 @@ const OurShop = () => {
           </div>
         </div>
         <Banner />
+
+        <div>
+          <Filter />
+        </div>
       </MainLayout>
-    </>
+    </OurShopProvider>
   );
 };
 

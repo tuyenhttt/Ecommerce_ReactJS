@@ -74,3 +74,30 @@
     width: 160px;
   }
 }
+
+.containerFilter {
+  @include flex_box_custom(space-between, center, 0px);
+  margin-top: 20px;
+
+  .boxLeft {
+    @include flex_box_custom(center, center, 15px);
+  }
+
+  .boxIcon {
+    @include flex_box_custom(center, center, 10px);
+  }
+
+  .selectBox {
+    border: 1px solid #e1e1e1;
+    padding: 5px;
+    color: $secondary_color;
+  }
+
+  .selectBox.sort {
+    width: 275px;
+  }
+
+  .selectBox.show {
+    width: 83px;
+  }
+}
