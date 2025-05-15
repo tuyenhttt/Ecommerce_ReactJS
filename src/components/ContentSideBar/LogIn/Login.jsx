@@ -4,15 +4,19 @@ import MyButton from '@components/Button/Button';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { toast, ToastContainer } from 'react-toastify';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { register, signIn } from '@/apis/authService';
 import Cookies from 'js-cookie';
+import { SideBarContext } from '@/contexts/SideBarProvider';
+import { StoreContext } from '@/contexts/storeProvider';
 
 function Login() {
   const { container, title, boxRememberMe, lostPassword, buttonWrapper } =
     styles;
   const [isRegister, setIsRegister] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const { setIsOpen } = useContext(SideBarContext);
+  const { setUserId } = useContext(StoreContext);
 
   const formik = useFormik({
     initialValues: {
@@ -54,9 +58,14 @@ function Login() {
           .then(res => {
             setIsLoading(false);
             const { id, token, refreshToken } = res.data;
+            setUserId(id);
 
             Cookies.set('token', token);
             Cookies.set('refreshToken', refreshToken);
+            Cookies.set('userId', id);
+
+            toast.success('Sign in success');
+            setIsOpen(false);
           })
           .catch(err => {
             setIsLoading(false);
@@ -71,8 +80,6 @@ function Login() {
     setIsRegister(!isRegister);
     formik.resetForm();
   };
-
-  useEffect(() => {});
 
   return (
     <div className={container}>

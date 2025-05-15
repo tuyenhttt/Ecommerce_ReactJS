@@ -15,10 +15,11 @@ function MyHeader() {
     containerBoxIcon,
     containerMenu,
     containerHeader,
-    containerBox,
     container,
     fixedHeader,
     topHeader,
+    headerCenter,
+    headerSection,
   } = styles;
 
   const { scrollPosition } = useScrollHandling();
@@ -43,55 +44,47 @@ function MyHeader() {
       })}
     >
       <div className={containerHeader}>
-        <div className={containerBox}>
+        {/* Cột trái */}
+        <div className={styles.headerSection}>
           <div className={containerBoxIcon}>
-            {dataBoxIcon.slice(0, 3).map((item, index) => {
-              return <BoxIcon key={index} type={item.type} href={item.href} />;
-            })}
+            {dataBoxIcon.slice(0, 3).map((item, index) => (
+              <BoxIcon key={index} type={item.type} href={item.href} />
+            ))}
           </div>
           <div className={containerMenu}>
-            {dataMenu.slice(0, 3).map((item, index) => {
-              return (
-                <Menu key={index} content={item.content} href={item.href} />
-              );
-            })}
+            {dataMenu.slice(0, 3).map((item, index) => (
+              <Menu key={index} content={item.content} href={item.href} />
+            ))}
           </div>
         </div>
-        <div>
+
+        {/* Logo chính giữa */}
+        <div className={headerCenter}>
           <img
             src='https://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/MINI_logo.svg/500px-MINI_logo.svg.png'
             alt='logo'
-            style={{
-              width: '153px',
-              height: '53px',
-            }}
+            className={styles.logo}
           />
         </div>
-        <div className={containerBox}>
+
+        {/* Cột phải */}
+        <div className={headerSection}>
           <div className={containerMenu}>
-            {dataMenu.slice(3, dataMenu.length).map((item, index) => {
-              return (
-                <Menu key={index} content={item.content} href={item.href} />
-              );
-            })}
+            {dataMenu.slice(3).map((item, index) => (
+              <Menu key={index} content={item.content} href={item.href} />
+            ))}
           </div>
           <div className={containerBoxIcon}>
             <TfiReload
-              style={{
-                fontSize: '25px',
-              }}
+              style={{ fontSize: '25px' }}
               onClick={() => handleOpenSideBar('compare')}
             />
             <FaRegHeart
-              style={{
-                fontSize: '25px',
-              }}
+              style={{ fontSize: '25px' }}
               onClick={() => handleOpenSideBar('wishlist')}
             />
             <LuShoppingCart
-              style={{
-                fontSize: '25px',
-              }}
+              style={{ fontSize: '25px' }}
               onClick={() => handleOpenSideBar('card')}
             />
           </div>
