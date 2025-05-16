@@ -1,13 +1,13 @@
 import { TfiLayoutGrid3 } from 'react-icons/tfi';
 import { CiCircleList } from 'react-icons/ci';
 import styles from '../styles.module.scss';
-import cls from 'classnames';
+
 import { useContext } from 'react';
 import { OurShopContext } from '@/contexts/OurShopProvider';
 import SelectBox from '@/pages/OurShop/components/SelectBox';
 
 const Filter = () => {
-  const { containerFilter, boxIcon, boxLeft, selectBox, sort, show } = styles;
+  const { containerFilter, boxIcon, boxLeft } = styles;
 
   const { showOptions, sortOptions, setSortId, setShowId, setIsShowGrid } =
     useContext(OurShopContext);

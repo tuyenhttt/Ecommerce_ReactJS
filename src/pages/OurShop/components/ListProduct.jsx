@@ -1,14 +1,18 @@
 import MainLayout from '@components/Layout/Layout';
-import styles from './styles.module.scss';
+import { useContext } from 'react';
+import { OurShopContext } from '@/contexts/OurShopProvider';
 import ProductItem from '@components/ProductItem/ProductItem';
+import styles from '../styles.module.scss';
 
-function PopularProduct({ data }) {
-  const { container } = styles;
+const ListProduct = () => {
+  const { containerProduct } = styles;
+  const { products, isShowGrid } = useContext(OurShopContext);
+
   return (
     <>
       <MainLayout>
-        <div className={container}>
-          {data.map(item => {
+        <div className={isShowGrid ? containerProduct : ''}>
+          {products.map(item => {
             return (
               <ProductItem
                 key={item._id}
@@ -17,6 +21,7 @@ function PopularProduct({ data }) {
                 name={item.name}
                 price={item.price}
                 details={item}
+                isHomePage={false}
               />
             );
           })}
@@ -24,6 +29,6 @@ function PopularProduct({ data }) {
       </MainLayout>
     </>
   );
-}
+};
 
-export default PopularProduct;
+export default ListProduct;
