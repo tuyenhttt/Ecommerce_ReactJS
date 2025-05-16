@@ -6,6 +6,7 @@ import Banner from '@/pages/OurShop/components/Banner';
 import { OurShopProvider } from '@contexts/OurShopProvider';
 import Filter from '@/pages/OurShop/components/Filter';
 import ListProduct from '@/pages/OurShop/components/ListProduct';
+import MyFooter from '@components/Footer/Footer';
 
 const OurShop = () => {
   const { container, functionBox, backLink } = styles;
@@ -36,6 +37,7 @@ const OurShop = () => {
           <ListProduct />
         </div>
       </MainLayout>
+      <MyFooter />
     </OurShopProvider>
   );
 };

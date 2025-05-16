@@ -6,9 +6,9 @@ import HeadingListProduct from '@components/HeadingListProduct/HeadingListProduc
 import { getProducts } from '@/apis/productsService';
 import PopularProduct from '@components/PopularProduct/PopularProduct';
 import SaleHomePage from '@components/SaleHomePage/SaleHomePage';
-
 import { useEffect, useState } from 'react';
 import MyFooter from '@components/Footer/Footer';
+import { OurShopProvider } from '@/contexts/OurShopProvider';
 
 function HomePage() {
   const [listProducts, setListProducts] = useState([]);
@@ -20,7 +20,7 @@ function HomePage() {
   }, []);
 
   return (
-    <>
+    <OurShopProvider>
       <MyHeader />
       <Banner />
       <Info />
@@ -29,7 +29,7 @@ function HomePage() {
       <PopularProduct data={listProducts.slice(2, 8)} />
       <SaleHomePage />
       <MyFooter />
-    </>
+    </OurShopProvider>
   );
 }
 

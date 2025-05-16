@@ -5,7 +5,7 @@ import cartIcon from '@icons/svgs/cartIcon.svg';
 import eyeIcon from '@icons/svgs/eyeIcon.svg';
 import classNames from 'classnames';
 import MyButton from '@components/Button/Button';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { OurShopContext } from '@/contexts/OurShopProvider';
 
 function ProductItem({
@@ -17,6 +17,7 @@ function ProductItem({
   isHomePage = true,
 }) {
   const { isShowGrid } = useContext(OurShopContext);
+  const [sizeChoose, setsizeChoose] = useState('');
 
   const {
     boxImg,
@@ -32,7 +33,12 @@ function ProductItem({
     content,
     containerItem,
     largImg,
+    isActiveSize,
   } = styles;
+
+  const handleChooseSize = size => {
+    setsizeChoose(prev => (prev === size ? '' : size));
+  };
 
   return (
     <div className={isShowGrid ? '' : containerItem}>
@@ -66,7 +72,13 @@ function ProductItem({
           <div className={boxSize}>
             {details.size.map((item, index) => {
               return (
-                <div className={size} key={index}>
+                <div
+                  className={classNames(size, {
+                    [isActiveSize]: sizeChoose === item.name,
+                  })}
+                  key={index}
+                  onClick={() => handleChooseSize(item.name)}
+                >
                   {item.name}
                 </div>
               );
