@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 
 function Menu({ content, href }) {
   const { menu, subMenu } = styles;
-  const { setIsOpen, setType } = useContext(SideBarContext);
+  const { setIsOpen, setType, clearCart } = useContext(SideBarContext);
   const [isShowSubMenu, setIsShowSubMenu] = useState(false);
 
   const { userInfo, handleLogOut } = useContext(StoreContext);
@@ -37,6 +37,12 @@ function Menu({ content, href }) {
     }
   };
 
+  const handleLogout = () => {
+    handleLogOut();
+    clearCart();
+    setIsShowSubMenu(false);
+  };
+
   return (
     <div
       className={menu}
@@ -47,7 +53,7 @@ function Menu({ content, href }) {
       {isShowSubMenu && (
         <div
           onMouseLeave={() => setIsShowSubMenu(false)}
-          onClick={handleLogOut}
+          onClick={handleLogout}
           className={subMenu}
         >
           LOG OUT

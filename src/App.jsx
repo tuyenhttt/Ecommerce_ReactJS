@@ -4,6 +4,7 @@ import { Suspense } from 'react';
 import SideBar from '@components/SideBar/SideBar';
 import { SideBarProvider } from '@/contexts/SideBarProvider';
 import { StoreProvider } from '@/contexts/storeProvider';
+import { ToastContainer } from 'react-toastify';
 
 function App() {
   return (
@@ -41,6 +42,7 @@ function App() {
             </Suspense>
           </BrowserRouter>
         </div>
+        <ToastContainer position='top-right' autoClose={2000} />
       </SideBarProvider>
     </StoreProvider>
   );

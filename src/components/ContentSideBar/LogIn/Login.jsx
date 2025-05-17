@@ -3,8 +3,8 @@ import styles from './styles.module.scss';
 import MyButton from '@components/Button/Button';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { toast, ToastContainer } from 'react-toastify';
-import { useContext, useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
+import { useContext, useState } from 'react';
 import { register, signIn } from '@/apis/authService';
 import Cookies from 'js-cookie';
 import { SideBarContext } from '@/contexts/SideBarProvider';
@@ -15,7 +15,7 @@ function Login() {
     styles;
   const [isRegister, setIsRegister] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const { setIsOpen } = useContext(SideBarContext);
+  const { setIsOpen, handleGetListProductsCart } = useContext(SideBarContext);
   const { setUserId } = useContext(StoreContext);
 
   const formik = useFormik({
@@ -64,8 +64,10 @@ function Login() {
             Cookies.set('refreshToken', refreshToken);
             Cookies.set('userId', id);
 
-            toast.success('Sign in success');
+            toast.success('Sign in successfully');
             setIsOpen(false);
+
+            handleGetListProductsCart(id, 'cart');
           })
           .catch(err => {
             setIsLoading(false);
@@ -143,9 +145,6 @@ function Login() {
         />
       </div>
       {!isRegister && <div className={lostPassword}>Lost your password</div>}
-
-      {/* Toast container */}
-      <ToastContainer position='top-right' autoClose={2000} />
     </div>
   );
 }

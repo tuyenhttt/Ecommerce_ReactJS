@@ -9,7 +9,7 @@ import { useContext, useEffect, useState } from 'react';
 import { OurShopContext } from '@/contexts/OurShopProvider';
 import Cookies from 'js-cookie';
 import { SideBarContext } from '@/contexts/SideBarProvider';
-import { toast, ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
 import { addProductToCart } from '@/apis/cartService';
 import LoadingTextCommon from '@components/LoadingTextCommon/LoadingTextCommon';
 
@@ -164,7 +164,6 @@ function ProductItem({
           </div>
         )}
       </div>
-      <ToastContainer position='top-right' autoClose={2000} />
     </div>
   );
 }
