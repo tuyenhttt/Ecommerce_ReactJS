@@ -3,9 +3,15 @@ import ItemProduct from '@components/ContentSideBar/components/ItemProduct/ItemP
 import { IoCartOutline } from 'react-icons/io5';
 import styles from './styles.module.scss';
 import MyButton from '@components/Button/Button';
+import { useContext } from 'react';
+import { SideBarContext } from '@/contexts/SideBarProvider';
 
 function Cart() {
   const { container, buttonWrapper, total } = styles;
+
+  const { listProductCart } = useContext(SideBarContext);
+  console.log(listProductCart);
+
   return (
     <div className={container}>
       <div>
@@ -13,7 +19,20 @@ function Cart() {
           icon={<IoCartOutline style={{ fontSize: '30px' }} />}
           title={'CART'}
         />
-        <ItemProduct />
+
+        {listProductCart.map((item, index) => {
+          return (
+            <ItemProduct
+              key={index}
+              src={item.images[0]}
+              nameProduct={item.name}
+              priceProduct={item.price}
+              skuProduct={item.sku}
+              sizeProduct={item.size}
+              quantity={item.quantity}
+            />
+          );
+        })}
       </div>
       <div>
         <div className={total}>
@@ -21,7 +40,7 @@ function Cart() {
           <p> $199</p>
         </div>
         <div className={buttonWrapper}>
-          <MyButton content={'VIEW  CART'} />
+          <MyButton content={'VIEW CART'} />
           <MyButton content={'CHECKOUT'} isPrimary={false} />
         </div>
       </div>

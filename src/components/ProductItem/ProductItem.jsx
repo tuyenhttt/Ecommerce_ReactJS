@@ -7,6 +7,11 @@ import classNames from 'classnames';
 import MyButton from '@components/Button/Button';
 import { useContext, useEffect, useState } from 'react';
 import { OurShopContext } from '@/contexts/OurShopProvider';
+import Cookies from 'js-cookie';
+import { SideBarContext } from '@/contexts/SideBarProvider';
+import { toast, ToastContainer } from 'react-toastify';
+import { addProductToCart } from '@/apis/cartService';
+import LoadingTextCommon from '@components/LoadingTextCommon/LoadingTextCommon';
 
 function ProductItem({
   src,
@@ -20,6 +25,10 @@ function ProductItem({
   const [sizeChoose, setsizeChoose] = useState('');
   const ourShopStore = useContext(OurShopContext);
   const [isShowGrid, setIsShowGrid] = useState(ourShopStore?.isShowGrid);
+  const userId = Cookies.get('userId');
+  const { setIsOpen, setType, handleGetListProductsCart } =
+    useContext(SideBarContext);
+  const [isLoading, setIsLoading] = useState(false);
 
   const {
     boxImg,
@@ -40,6 +49,41 @@ function ProductItem({
 
   const handleChooseSize = size => {
     setsizeChoose(prev => (prev === size ? '' : size));
+  };
+
+  const handleAddToCart = () => {
+    if (!userId) {
+      setIsOpen(true);
+      setType('login');
+      toast.warning('Please login to add product to cart');
+      return;
+    }
+    if (!sizeChoose) {
+      toast.warning('Please choose size');
+      return;
+    }
+
+    const data = {
+      userId,
+      productId: details._id,
+      quantity: 1,
+      size: sizeChoose,
+    };
+
+    setIsLoading(true);
+    addProductToCart(data)
+      .then(res => {
+        setIsOpen(true);
+        setType('cart');
+        toast.success('Add product to cart successfully');
+        setIsLoading(false);
+        handleGetListProductsCart(userId, 'cart');
+      })
+      .catch(err => {
+        console.log(err);
+        toast.error('Add product to cart failed');
+        setIsLoading(false);
+      });
   };
 
   useEffect(() => {
@@ -113,10 +157,14 @@ function ProductItem({
         </div>
         {!isHomePage && (
           <div className={boxBtn}>
-            <MyButton content={'Add to cart'} />
+            <MyButton
+              content={isLoading ? <LoadingTextCommon /> : 'ADD TO CART'}
+              onClick={handleAddToCart}
+            />
           </div>
         )}
       </div>
+      <ToastContainer position='top-right' autoClose={2000} />
     </div>
   );
 }

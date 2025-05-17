@@ -23,7 +23,7 @@ function SideBar() {
         return <Compare />;
       case 'wishlist':
         return <WishList />;
-      case 'card':
+      case 'cart':
         return <Cart />;
 
       default:

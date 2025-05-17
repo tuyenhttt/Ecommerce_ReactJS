@@ -20,12 +20,14 @@ function MyHeader() {
     topHeader,
     headerCenter,
     headerSection,
+    boxCart,
+    quantity,
   } = styles;
 
   const { scrollPosition } = useScrollHandling();
   const [fixedPosition, setFixedPosition] = useState(false);
 
-  const { setIsOpen, setType } = useContext(SideBarContext);
+  const { setIsOpen, setType, listProductCart } = useContext(SideBarContext);
 
   const handleOpenSideBar = type => {
     setIsOpen(true);
@@ -44,7 +46,6 @@ function MyHeader() {
       })}
     >
       <div className={containerHeader}>
-        {/* Cột trái */}
         <div className={styles.headerSection}>
           <div className={containerBoxIcon}>
             {dataBoxIcon.slice(0, 3).map((item, index) => (
@@ -58,7 +59,6 @@ function MyHeader() {
           </div>
         </div>
 
-        {/* Logo chính giữa */}
         <div className={headerCenter}>
           <img
             src='https://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/MINI_logo.svg/500px-MINI_logo.svg.png'
@@ -67,7 +67,6 @@ function MyHeader() {
           />
         </div>
 
-        {/* Cột phải */}
         <div className={headerSection}>
           <div className={containerMenu}>
             {dataMenu.slice(3).map((item, index) => (
@@ -83,10 +82,13 @@ function MyHeader() {
               style={{ fontSize: '25px' }}
               onClick={() => handleOpenSideBar('wishlist')}
             />
-            <LuShoppingCart
-              style={{ fontSize: '25px' }}
-              onClick={() => handleOpenSideBar('card')}
-            />
+            <div className={boxCart}>
+              <LuShoppingCart
+                style={{ fontSize: '25px' }}
+                onClick={() => handleOpenSideBar('cart')}
+              />
+              <div className={quantity}>{listProductCart.length}</div>
+            </div>
           </div>
         </div>
       </div>

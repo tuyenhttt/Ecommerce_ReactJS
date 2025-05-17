@@ -1,22 +1,28 @@
 import styles from './styles.module.scss';
 import { IoClose } from 'react-icons/io5';
 
-function ItemProduct() {
+function ItemProduct({
+  src,
+  nameProduct,
+  priceProduct,
+  skuProduct,
+  sizeProduct,
+  quantity,
+}) {
   const { container, boxContent, title, price, boxClose, size } = styles;
   return (
     <div className={container}>
-      <img
-        src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbctfw2KagagcVnuOzFjd9yiAvPHeTlmhMyw&s'
-        alt=''
-      />
+      <img src={src} alt='' />
       <div className={boxClose}>
         <IoClose style={{ fontSize: '22px' }} />
       </div>
       <div className={boxContent}>
-        <div className={title}>title of product</div>
-        <div className={size}>Size: M</div>
-        <div className={price}>$119</div>
-        <div className={price}>SKU: 111154789</div>
+        <div className={title}>{nameProduct}</div>
+        <div className={size}>{sizeProduct}</div>
+        <div className={price}>
+          {quantity} X ${priceProduct}
+        </div>
+        <div className={price}>{skuProduct}</div>
       </div>
     </div>
   );

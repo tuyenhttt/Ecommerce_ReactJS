@@ -4,10 +4,10 @@ import { OurShopContext } from '@/contexts/OurShopProvider';
 import ProductItem from '@components/ProductItem/ProductItem';
 import styles from '../styles.module.scss';
 import MyButton from '@components/Button/Button';
-import { AiOutlineLoading3Quarters } from 'react-icons/ai';
+import LoadingTextCommon from '@components/LoadingTextCommon/LoadingTextCommon';
 
 const ListProduct = () => {
-  const { containerProduct, moreBtn, rotate } = styles;
+  const { containerProduct, moreBtn } = styles;
   const { products, isShowGrid, isLoading, handleLoadMore, total, isLoadMore } =
     useContext(OurShopContext);
 
@@ -37,11 +37,7 @@ const ListProduct = () => {
               <div className={moreBtn}>
                 <MyButton
                   content={
-                    isLoadMore ? (
-                      <AiOutlineLoading3Quarters className={rotate} />
-                    ) : (
-                      'LOAD MORE PRODUCT'
-                    )
+                    isLoadMore ? <LoadingTextCommon /> : 'LOAD MORE PRODUCT'
                   }
                   onClick={handleLoadMore}
                 />
