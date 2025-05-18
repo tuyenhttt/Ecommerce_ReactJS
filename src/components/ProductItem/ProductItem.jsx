@@ -153,7 +153,7 @@ function ProductItem({
           })}
           style={{ color: isHomePage ? '#333' : '#888' }}
         >
-          ${price}
+          $ {price}
         </div>
         {!isHomePage && (
           <div className={boxBtn}>

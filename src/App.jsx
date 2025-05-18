@@ -10,9 +10,9 @@ function App() {
   return (
     <StoreProvider>
       <SideBarProvider>
-        <SideBar />
         <div>
           <BrowserRouter>
+            <SideBar />
             <Suspense
               fallback={
                 <div

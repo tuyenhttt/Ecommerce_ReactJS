@@ -52,7 +52,7 @@ function ItemProduct({
         <div className={title}>{nameProduct}</div>
         <div className={size}>{sizeProduct}</div>
         <div className={price}>
-          {quantity} X ${priceProduct}
+          {quantity} X $ {priceProduct}
         </div>
         <div className={price}>{skuProduct}</div>
       </div>
