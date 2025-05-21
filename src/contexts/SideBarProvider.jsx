@@ -43,6 +43,7 @@ export const SideBarProvider = ({ children }) => {
     listProductCart,
     clearCart,
     isLoading,
+    userId,
   };
 
   return (

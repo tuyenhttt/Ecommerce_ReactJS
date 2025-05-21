@@ -124,8 +124,8 @@
       align-items: center;
 
       img {
-        width: calc(100px - 0.71em);
-        height: calc(100px - 0.71em);
+        width: calc(100px - 1.5em);
+        height: calc(100px - 1.2em);
         object-fit: cover;
         border-radius: 2px;
       }
@@ -273,5 +273,24 @@
         color: #ff4d4f;
       }
     }
+  }
+}
+
+.boxEmptyCart {
+  @include flex_box_custom(center, center, 30px);
+
+  flex-direction: column;
+  width: 100%;
+  font-size: 14px;
+  color: $thr_color;
+
+  .titleEmpty {
+    font-size: 24px;
+    color: $primary_color;
+    font-weight: 500;
+  }
+  button {
+    font-size: 16px;
+    font-weight: 500;
   }
 }
