@@ -62,7 +62,7 @@
 }
 
 .containerContent {
-  @include flex_box_custom(space-between, flex-start, 00px);
+  @include flex_box_custom(space-between, flex-start, 30px);
 
   .left {
     flex: 2;
@@ -234,5 +234,44 @@
     font-size: 14px;
     color: $thr_color;
     margin-top: 5px;
+  }
+
+  .boxFooter {
+    @include flex_box_custom(space-between, center, 0px);
+    margin-top: 15px;
+
+    .boxCoupon {
+      @include flex_box_custom(flex-start, center, 0px);
+
+      input {
+        border: 1px solid #e1e1e1;
+        padding: 8px 15px;
+        width: 270px;
+        outline: none;
+      }
+
+      button {
+        height: 36px;
+        border-radius: 0px;
+        padding: 0 10px;
+        font-size: 12px;
+        width: 36px;
+      }
+    }
+
+    .boxBtnDelete {
+      align-items: center;
+      button {
+        height: 36px;
+        width: 190px;
+        padding: 0 5px;
+      }
+
+      span {
+        font-size: 15px;
+        align-items: center;
+        color: #ff4d4f;
+      }
+    }
   }
 }

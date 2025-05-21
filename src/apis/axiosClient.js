@@ -1,8 +1,10 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
 
+const baseURL = import.meta.env.VITE_BASE_URL;
+
 const axiosClient = axios.create({
-  baseURL: 'https://be-project-reactjs.onrender.com/api/v1/',
+  baseURL,
   timeout: 5000,
   headers: {
     'Content-Type': 'application/json',
@@ -53,6 +55,7 @@ axiosClient.interceptors.response.use(
         return Promise.reject(error);
       }
     }
+    return Promise.reject(err);
   }
 );
 

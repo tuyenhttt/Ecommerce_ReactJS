@@ -1,5 +1,4 @@
 import axiosClient from '@/apis/axiosClient';
-import { data } from 'react-router-dom';
 
 const addProductToCart = async data => {
   return await axiosClient.post('/cart', data);

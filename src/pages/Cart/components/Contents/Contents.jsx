@@ -1,6 +1,8 @@
 import CartTable from '@/pages/Cart/components/Contents/CartTable';
 import CartSummary from '@/pages/Cart/components/Contents/CartSummary';
 import styles from '../../styles.module.scss';
+import MyButton from '@components/Button/Button';
+import { FiTrash2 } from 'react-icons/fi';
 
 const Contents = () => {
   const mockItems = [
@@ -33,12 +35,34 @@ const Contents = () => {
     },
   ];
 
-  const { containerContent, left, right } = styles;
+  const { containerContent, left, right, boxFooter, boxCoupon, boxBtnDelete } =
+    styles;
   return (
     <div className={containerContent}>
       <div className={left}>
         <CartTable items={mockItems} />
+        <div className={boxFooter}>
+          <div className={boxCoupon}>
+            <input type='text' placeholder='Counpon code' />
+            <MyButton content={'OK'} isPrimary={false} />
+          </div>
+
+          <div className={boxBtnDelete}>
+            <MyButton
+              content={
+                <div>
+                  <span>
+                    <FiTrash2 />
+                  </span>{' '}
+                  CLEAR SHOPPING CART
+                </div>
+              }
+              isPrimary={false}
+            />
+          </div>
+        </div>
       </div>
+
       <div className={right}>
         <CartSummary items={mockItems} />
       </div>
