@@ -1,8 +1,4 @@
 import styles from './styles.module.scss';
-import reloadIcon from '@icons/svgs/reloadIcon.svg';
-import heartIcon from '@icons/svgs/heartIcon.svg';
-import cartIcon from '@icons/svgs/cartIcon.svg';
-import eyeIcon from '@icons/svgs/eyeIcon.svg';
 import classNames from 'classnames';
 import MyButton from '@components/Button/Button';
 import { useContext, useEffect, useState } from 'react';
@@ -12,6 +8,10 @@ import { SideBarContext } from '@/contexts/SideBarProvider';
 import { toast } from 'react-toastify';
 import { addProductToCart } from '@/apis/cartService';
 import LoadingTextCommon from '@components/LoadingTextCommon/LoadingTextCommon';
+import { LiaShoppingBagSolid } from 'react-icons/lia';
+import { FaRegHeart } from 'react-icons/fa';
+import { TfiReload } from 'react-icons/tfi';
+import { FaRegEye } from 'react-icons/fa6';
 
 function ProductItem({
   src,
@@ -26,7 +26,7 @@ function ProductItem({
   const ourShopStore = useContext(OurShopContext);
   const [isShowGrid, setIsShowGrid] = useState(ourShopStore?.isShowGrid);
   const userId = Cookies.get('userId');
-  const { setIsOpen, setType, handleGetListProductsCart } =
+  const { setIsOpen, setType, handleGetListProductsCart, setDetailProduct } =
     useContext(SideBarContext);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -86,6 +86,12 @@ function ProductItem({
       });
   };
 
+  const handleShowDetailProductSideBar = () => {
+    setIsOpen(true);
+    setType('detail');
+    setDetailProduct(details);
+  };
+
   useEffect(() => {
     isHomePage ? setIsShowGrid(true) : setIsShowGrid(ourShopStore?.isShowGrid);
   }, [isHomePage, ourShopStore?.isShowGrid]);
@@ -100,20 +106,18 @@ function ProductItem({
         <img src={src} alt='' />
         <img src={prevSrc} alt='' className={showImageHover} />
         <div className={showFncHover}>
-          <div>
-            <div className={boxIcon}>
-              <img src={cartIcon} alt='' />
-            </div>
+          <div className={boxIcon}>
+            <LiaShoppingBagSolid style={{ fontSize: '20px' }} />
+          </div>
 
-            <div className={boxIcon}>
-              <img src={heartIcon} alt='' />
-            </div>
-            <div className={boxIcon}>
-              <img src={reloadIcon} alt='' />
-            </div>
-            <div className={boxIcon}>
-              <img src={eyeIcon} alt='' />
-            </div>
+          <div className={boxIcon}>
+            <FaRegHeart style={{ fontSize: '20px' }} />
+          </div>
+          <div className={boxIcon}>
+            <TfiReload style={{ fontSize: '20px' }} />
+          </div>
+          <div className={boxIcon} onClick={handleShowDetailProductSideBar}>
+            <FaRegEye style={{ fontSize: '20px' }} />
           </div>
         </div>
       </div>

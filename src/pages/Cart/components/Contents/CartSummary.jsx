@@ -32,9 +32,9 @@ const CartSummary = () => {
     'https://xstore.8theme.com/elementor2/marseille04/wp-content/themes/xstore/images/woocommerce/payment-icons/bitcoin.jpeg',
   ];
 
-  const total = listProductCart.reduce((acc, item) => {
-    return acc + item.total;
-  }, 0);
+  const total = parseFloat(
+    listProductCart.reduce((acc, item) => acc + item.total, 0).toFixed(2)
+  );
 
   return (
     <>
