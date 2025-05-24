@@ -47,6 +47,7 @@ export const SideBarProvider = ({ children }) => {
     handleGetListProductsCart,
     clearCart,
     setDetailProduct,
+    setIsLoading,
   };
 
   return (
