@@ -3,6 +3,7 @@ import styles from '../../styles.module.scss';
 import classNames from 'classnames';
 import { useContext } from 'react';
 import { SideBarContext } from '@/contexts/SideBarProvider';
+import PaymentMethod from '@components/PaymentMethos/PaymentMethod';
 
 const CartSummary = () => {
   const {
@@ -14,23 +15,9 @@ const CartSummary = () => {
     totals,
     space,
     buttonWrapper,
-    containerMethod,
-    titleMethod,
-    boxImgMethod,
-    imgMethod,
-    textSecure,
   } = styles;
 
   const { listProductCart } = useContext(SideBarContext);
-
-  const srcMethod = [
-    'https://xstore.8theme.com/elementor2/marseille04/wp-content/themes/xstore/images/woocommerce/payment-icons/visa.jpeg',
-    'https://xstore.8theme.com/elementor2/marseille04/wp-content/themes/xstore/images/woocommerce/payment-icons/master-card.jpeg',
-    'https://xstore.8theme.com/elementor2/marseille04/wp-content/themes/xstore/images/woocommerce/payment-icons/paypal.jpeg',
-    'https://xstore.8theme.com/elementor2/marseille04/wp-content/themes/xstore/images/woocommerce/payment-icons/american-express.jpeg',
-    'https://xstore.8theme.com/elementor2/marseille04/wp-content/themes/xstore/images/woocommerce/payment-icons/maestro.jpeg',
-    'https://xstore.8theme.com/elementor2/marseille04/wp-content/themes/xstore/images/woocommerce/payment-icons/bitcoin.jpeg',
-  ];
 
   const total = parseFloat(
     listProductCart.reduce((acc, item) => acc + item.total, 0).toFixed(2)
@@ -54,20 +41,7 @@ const CartSummary = () => {
           <MyButton content={'CONTINUE SHOPPING'} isPrimary={false} />
         </div>
       </div>
-      <div className={containerMethod}>
-        <div className={titleMethod}>
-          Guaranteed <span>safe</span> checkout
-        </div>
-
-        <div className={boxImgMethod}>
-          {srcMethod.map((src, index) => {
-            return (
-              <img src={src} alt={src} key={index} className={imgMethod} />
-            );
-          })}
-        </div>
-      </div>
-      <div className={textSecure}>Your Payment is 100% Secure </div>
+      <PaymentMethod />
     </>
   );
 };
