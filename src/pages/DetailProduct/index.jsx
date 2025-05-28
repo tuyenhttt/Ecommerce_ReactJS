@@ -7,6 +7,8 @@ import { FaRegHeart } from 'react-icons/fa';
 import { TfiReload } from 'react-icons/tfi';
 import styles from './styles.module.scss';
 import PaymentMethod from '@components/PaymentMethos/PaymentMethod';
+import AccordionMenu from '@components/AccordionMenu';
+import { useState } from 'react';
 
 const DetailProduct = () => {
   const {
@@ -33,6 +35,35 @@ const DetailProduct = () => {
 
   const handleBackPreviousPage = () => {
     navigate(-1);
+  };
+
+  const [menuSelected, setMenuSelected] = useState(1);
+
+  const dataAccordionMenu = [
+    {
+      id: 1,
+      titleMenu: 'ADDITTIONAL INFORMATION',
+      content: <div>CONTENT ADDITIONAL</div>,
+    },
+    {
+      id: 2,
+      titleMenu: 'REVIEW (0)',
+      content: <div>CONTENT REVIEW</div>,
+    },
+    {
+      id: 3,
+      titleMenu: 'REVIEW A',
+      content: <div>CONTENT REVIEW</div>,
+    },
+    {
+      id: 4,
+      titleMenu: 'REVIEW B',
+      content: <div>CONTENT REVIEW</div>,
+    },
+  ];
+
+  const handleSetMenuSelected = id => {
+    setMenuSelected(id);
   };
 
   return (
@@ -98,9 +129,11 @@ const DetailProduct = () => {
                 <span>OR</span>
                 <div></div>
               </div>
+
               <div>
                 <MyButton content={'BUY NOW'} />
               </div>
+
               <div className={addFunc}>
                 <div>
                   <FaRegHeart />
@@ -109,9 +142,11 @@ const DetailProduct = () => {
                   <TfiReload />
                 </div>
               </div>
+
               <div>
                 <PaymentMethod />
               </div>
+
               <div className={info}>
                 <div>
                   Brand: <span>Brand 03</span>
@@ -123,6 +158,15 @@ const DetailProduct = () => {
                   Category: <span>Men</span>
                 </div>
               </div>
+              {dataAccordionMenu.map((item, index) => (
+                <AccordionMenu
+                  key={index}
+                  titleMenu={item.titleMenu}
+                  contentJsx={item.content}
+                  onClick={() => handleSetMenuSelected(item.id)}
+                  isSelected={menuSelected === item.id}
+                />
+              ))}
             </div>
           </div>
         </MainLayout>
