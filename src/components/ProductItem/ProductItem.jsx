@@ -21,6 +21,7 @@ function ProductItem({
   price,
   details,
   isHomePage = true,
+  slideItem = false,
 }) {
   // const { isShowGrid } = useContext(OurShopContext);
   const [sizeChoose, setsizeChoose] = useState('');
@@ -47,6 +48,7 @@ function ProductItem({
     containerItem,
     largImg,
     isActiveSize,
+    leftBtn,
   } = styles;
 
   const handleChooseSize = size => {
@@ -102,6 +104,10 @@ function ProductItem({
   useEffect(() => {
     isHomePage ? setIsShowGrid(true) : setIsShowGrid(ourShopStore?.isShowGrid);
   }, [isHomePage, ourShopStore?.isShowGrid]);
+
+  useEffect(() => {
+    if (slideItem) setIsShowGrid(true);
+  }, [slideItem]);
 
   return (
     <div
@@ -171,7 +177,11 @@ function ProductItem({
           $ {price}
         </div>
         {!isHomePage && (
-          <div className={boxBtn}>
+          <div
+            className={classNames(boxBtn, {
+              [leftBtn]: !isShowGrid,
+            })}
+          >
             <MyButton
               content={isLoading ? <LoadingTextCommon /> : 'ADD TO CART'}
               onClick={handleAddToCart}

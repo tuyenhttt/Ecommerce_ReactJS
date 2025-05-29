@@ -11,6 +11,8 @@ import { useState } from 'react';
 import { FaRegHeart } from 'react-icons/fa';
 import { TfiReload } from 'react-icons/tfi';
 import styles from './styles.module.scss';
+import SliderCommon from '@components/SliderCommon/SliderCommon';
+import ReactImageMagnifier from 'simple-image-magnifier/react';
 
 const DetailProduct = () => {
   const {
@@ -54,9 +56,51 @@ const DetailProduct = () => {
     },
   ];
 
+  const dataImageDetail = [
+    'https://xstore.b-cdn.net/elementor2/marseille04/wp-content/uploads/sites/2/2022/12/Image-13.1-min.jpg',
+    'https://xstore.b-cdn.net/elementor2/marseille04/wp-content/uploads/sites/2/2022/12/Image-13.1-min.jpg',
+    'https://xstore.b-cdn.net/elementor2/marseille04/wp-content/uploads/sites/2/2022/12/Image-13.1-min.jpg',
+    'https://xstore.b-cdn.net/elementor2/marseille04/wp-content/uploads/sites/2/2022/12/Image-13.1-min.jpg',
+  ];
+
+  const handleRenderZoomImage = src => {
+    return (
+      <ReactImageMagnifier
+        srcPreview={src}
+        srcOriginal={src}
+        width={295}
+        height={350}
+      />
+    );
+  };
+
   const handleSetMenuSelected = id => {
     setMenuSelected(id);
   };
+
+  const tempDataSlider = [
+    {
+      image:
+        'https://xstore.b-cdn.net/elementor2/marseille04/wp-content/uploads/sites/2/2022/12/Image-13.1-min.jpg',
+      name: ' Tesst 1',
+      price: '1000',
+      size: [{ name: 'L' }, { name: 'M' }, { name: 'S' }],
+    },
+    {
+      image:
+        'https://xstore.b-cdn.net/elementor2/marseille04/wp-content/uploads/sites/2/2022/12/Image-13.1-min.jpg',
+      name: ' Tesst 1',
+      price: '1000',
+      size: [{ name: 'L' }, { name: 'M' }, { name: 'S' }],
+    },
+    {
+      image:
+        'https://xstore.b-cdn.net/elementor2/marseille04/wp-content/uploads/sites/2/2022/12/Image-13.1-min.jpg',
+      name: ' Tesst 1',
+      price: '1000',
+      size: [{ name: 'L' }, { name: 'M' }, { name: 'S' }],
+    },
+  ];
 
   return (
     <div>
@@ -75,22 +119,7 @@ const DetailProduct = () => {
 
           <div className={contentSection}>
             <div className={imageBox}>
-              <img
-                src='https://xstore.b-cdn.net/elementor2/marseille04/wp-content/uploads/sites/2/2022/12/Image-13.1-min.jpg'
-                alt=''
-              />
-              <img
-                src='https://xstore.b-cdn.net/elementor2/marseille04/wp-content/uploads/sites/2/2022/12/Image-13.1-min.jpg'
-                alt=''
-              />
-              <img
-                src='https://xstore.b-cdn.net/elementor2/marseille04/wp-content/uploads/sites/2/2022/12/Image-13.1-min.jpg'
-                alt=''
-              />
-              <img
-                src='https://xstore.b-cdn.net/elementor2/marseille04/wp-content/uploads/sites/2/2022/12/Image-13.1-min.jpg'
-                alt=''
-              />
+              {dataImageDetail.map(src => handleRenderZoomImage(src))}
             </div>
             <div className={infoBox}>
               <h1>Title Product</h1>
@@ -161,6 +190,14 @@ const DetailProduct = () => {
               ))}
             </div>
           </div>
+
+          {/* <div>
+            <h2>Related Product</h2>
+
+            <div>
+              <SliderCommon data={tempDataSlider} isProductItem showItem={4} />
+            </div>
+          </div> */}
         </MainLayout>
       </div>
 
