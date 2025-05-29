@@ -166,3 +166,113 @@
     }
   }
 }
+
+.containerInfo {
+  div:last-child {
+    border-bottom: unset;
+  }
+
+  .itemInfo {
+    @include flex_box_custom(flex-start, center, 0px);
+
+    border-bottom: 1px solid #e1e1e1;
+    padding: 10px 0;
+
+    div {
+      width: 50%;
+    }
+
+    .title {
+      font-size: 16px;
+      color: $secondary_color;
+    }
+
+    .content {
+      color: $thr_color;
+    }
+  }
+}
+
+.containerReview {
+  .reviews {
+    padding-bottom: 15px;
+    border-bottom: 1px solid #e1e1e1;
+  }
+
+  .noreview {
+    font-size: 14px;
+    color: $thr_color;
+    margin: 20px 0;
+  }
+
+  .replyForm {
+    padding-top: 30px;
+
+    .commentReplyTitle {
+      font-size: 14px;
+      margin-bottom: 14px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid #e1e1e1;
+      color: $thr_color;
+    }
+
+    .commentNotes {
+      font-size: 14px;
+      color: $thr_color;
+      margin-bottom: 20px;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+
+      .checkConfirm {
+        display: flex;
+        align-items: flex-start;
+        gap: 15px;
+
+        input {
+          margin-top: 2px;
+        }
+
+        span {
+          color: $thr_color;
+        }
+      }
+
+      .btnSubmit {
+        width: 100%;
+      }
+    }
+  }
+}
+
+.formInput {
+  display: flex;
+  flex-direction: column;
+
+  .boxItemStar {
+    display: flex;
+    gap: 20px;
+    margin-top: 15px;
+  }
+
+  label {
+    color: $thr_color;
+
+    span {
+      color: #c62828;
+    }
+  }
+
+  input,
+  textarea {
+    border: 1px solid #e1e1e1;
+    padding: 8px 15px;
+    outline: none;
+    &:focus {
+      border: 1px solid $secondary_color;
+    }
+  }
+}

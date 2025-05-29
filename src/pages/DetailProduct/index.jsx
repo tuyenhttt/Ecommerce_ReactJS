@@ -1,14 +1,16 @@
 import MyFooter from '@components/Footer/Footer';
 import MyHeader from '@components/Header/Header';
 import MainLayout from '@components/Layout/Layout';
-import { Link, useNavigate } from 'react-router-dom';
 import MyButton from '@components/Button/Button';
+import PaymentMethod from '@components/PaymentMethos/PaymentMethod';
+import AccordionMenu from '@components/AccordionMenu';
+import Information from '@/pages/DetailProduct/components/Information';
+import ReviewProduct from '@/pages/DetailProduct/components/Review';
+import { Link, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 import { FaRegHeart } from 'react-icons/fa';
 import { TfiReload } from 'react-icons/tfi';
 import styles from './styles.module.scss';
-import PaymentMethod from '@components/PaymentMethos/PaymentMethod';
-import AccordionMenu from '@components/AccordionMenu';
-import { useState } from 'react';
 
 const DetailProduct = () => {
   const {
@@ -43,22 +45,12 @@ const DetailProduct = () => {
     {
       id: 1,
       titleMenu: 'ADDITTIONAL INFORMATION',
-      content: <div>CONTENT ADDITIONAL</div>,
+      content: <Information />,
     },
     {
       id: 2,
       titleMenu: 'REVIEW (0)',
-      content: <div>CONTENT REVIEW</div>,
-    },
-    {
-      id: 3,
-      titleMenu: 'REVIEW A',
-      content: <div>CONTENT REVIEW</div>,
-    },
-    {
-      id: 4,
-      titleMenu: 'REVIEW B',
-      content: <div>CONTENT REVIEW</div>,
+      content: <ReviewProduct />,
     },
   ];
 
