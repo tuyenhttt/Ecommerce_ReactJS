@@ -14,21 +14,8 @@ import styles from './styles.module.scss';
 import ReactImageMagnifier from 'simple-image-magnifier/react';
 import classNames from 'classnames';
 import { getDetailProduct } from '@/apis/productsService';
-
-const tempDataSize = [
-  {
-    name: 'L',
-    amount: '100',
-  },
-  {
-    name: 'M',
-    amount: '100',
-  },
-  {
-    name: 'S',
-    amount: '100',
-  },
-];
+import SliderCommon from '@components/SliderCommon/SliderCommon';
+import LoadingTextCommon from '@components/LoadingTextCommon/LoadingTextCommon';
 
 const DetailProduct = () => {
   const {
@@ -51,6 +38,7 @@ const DetailProduct = () => {
     info,
     active,
     activeDisableBtn,
+    loading,
   } = styles;
 
   const navigate = useNavigate();
@@ -78,13 +66,6 @@ const DetailProduct = () => {
       titleMenu: 'REVIEW (0)',
       content: <ReviewProduct />,
     },
-  ];
-
-  const dataImageDetail = [
-    'https://xstore.b-cdn.net/elementor2/marseille04/wp-content/uploads/sites/2/2022/12/Image-13.1-min.jpg',
-    'https://xstore.b-cdn.net/elementor2/marseille04/wp-content/uploads/sites/2/2022/12/Image-13.1-min.jpg',
-    'https://xstore.b-cdn.net/elementor2/marseille04/wp-content/uploads/sites/2/2022/12/Image-13.1-min.jpg',
-    'https://xstore.b-cdn.net/elementor2/marseille04/wp-content/uploads/sites/2/2022/12/Image-13.1-min.jpg',
   ];
 
   const handleRenderZoomImage = src => {
@@ -164,37 +145,33 @@ const DetailProduct = () => {
     <div>
       <MyHeader />
 
-      {isLoading ? (
-        'Loading...'
-      ) : (
-        <div className={container}>
-          <MainLayout>
-            <div className={navigateSection}>
-              <div className={functionBox}>
-                <Link to='/'>Home</Link> <span> &gt; Shop</span>
-              </div>
-              <div
-                className={backLink}
-                onClick={() => handleBackPreviousPage()}
-              >
-                &lt; Return to previous pages
-              </div>
+      <div className={container}>
+        <MainLayout>
+          <div className={navigateSection}>
+            <div className={functionBox}>
+              <Link to='/'>Home</Link> <span> &gt; Shop</span>
             </div>
+            <div className={backLink} onClick={() => handleBackPreviousPage()}>
+              &lt; Return to previous pages
+            </div>
+          </div>
 
+          {isLoading ? (
+            <div className={loading}>
+              <LoadingTextCommon />
+            </div>
+          ) : (
             <div className={contentSection}>
               <div className={imageBox}>
-                {dataImageDetail.map(src => handleRenderZoomImage(src))}
+                {data?.images.map(src => handleRenderZoomImage(src))}
               </div>
               <div className={infoBox}>
-                <h1>Title Product</h1>
-                <p className={price}>$ 1.5534</p>
-                <p className={description}>
-                  Amet, elit tellus, nisi odio velit ut. Euismod sit arcu,
-                  quisque arcu purus orci leo.
-                </p>
+                <h1>{data?.name}</h1>
+                <p className={price}>$ {data?.price}</p>
+                <p className={description}>{data?.description}</p>
                 <p className={description}>Size {sizeSelected} </p>
                 <div className={boxSize}>
-                  {tempDataSize.map((itemSize, index) => {
+                  {data?.size.map((itemSize, index) => {
                     return (
                       <div
                         key={index}
@@ -270,17 +247,17 @@ const DetailProduct = () => {
                 ))}
               </div>
             </div>
+          )}
 
-            {/* <div>
+          <div>
             <h2>Related Product</h2>
 
             <div>
-              <SliderCommon data={tempDataSlider} isProductItem showItem={4} />
+              <SliderCommon data={tempDataSlider} isProductItem showItem={3} />
             </div>
-          </div> */}
-          </MainLayout>
-        </div>
-      )}
+          </div>
+        </MainLayout>
+      </div>
 
       <MyFooter />
     </div>
