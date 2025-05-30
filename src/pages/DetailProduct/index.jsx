@@ -6,13 +6,14 @@ import PaymentMethod from '@components/PaymentMethos/PaymentMethod';
 import AccordionMenu from '@components/AccordionMenu';
 import Information from '@/pages/DetailProduct/components/Information';
 import ReviewProduct from '@/pages/DetailProduct/components/Review';
-import { Link, useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 import { FaRegHeart } from 'react-icons/fa';
 import { TfiReload } from 'react-icons/tfi';
 import styles from './styles.module.scss';
 import ReactImageMagnifier from 'simple-image-magnifier/react';
 import classNames from 'classnames';
+import { getDetailProduct } from '@/apis/productsService';
 
 const tempDataSize = [
   {
@@ -61,6 +62,10 @@ const DetailProduct = () => {
   const [menuSelected, setMenuSelected] = useState(1);
   const [sizeSelected, setSizeSelected] = useState('');
   const [quantity, setQuantity] = useState(1);
+  const [data, setData] = useState();
+  const [isLoading, setIsLoading] = useState(false);
+
+  const param = useParams();
 
   const dataAccordionMenu = [
     {
@@ -136,120 +141,146 @@ const DetailProduct = () => {
     },
   ];
 
+  const fetchDataDetail = async id => {
+    setIsLoading(true);
+    try {
+      const data = await getDetailProduct(id);
+      setData(data);
+
+      setIsLoading(false);
+    } catch (error) {
+      console.log(error);
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (param.id) {
+      fetchDataDetail(param.id);
+    }
+  }, [param]);
+
   return (
     <div>
       <MyHeader />
 
-      <div className={container}>
-        <MainLayout>
-          <div className={navigateSection}>
-            <div className={functionBox}>
-              <Link to='/'>Home</Link> <span> &gt; Shop</span>
-            </div>
-            <div className={backLink} onClick={() => handleBackPreviousPage()}>
-              &lt; Return to previous pages
-            </div>
-          </div>
-
-          <div className={contentSection}>
-            <div className={imageBox}>
-              {dataImageDetail.map(src => handleRenderZoomImage(src))}
-            </div>
-            <div className={infoBox}>
-              <h1>Title Product</h1>
-              <p className={price}>$ 1.5534</p>
-              <p className={description}>
-                Amet, elit tellus, nisi odio velit ut. Euismod sit arcu, quisque
-                arcu purus orci leo.
-              </p>
-              <p className={description}>Size {sizeSelected} </p>
-              <div className={boxSize}>
-                {tempDataSize.map((itemSize, index) => {
-                  return (
-                    <div
-                      key={index}
-                      className={classNames(size, {
-                        [active]: sizeSelected === itemSize.name,
-                      })}
-                      onClick={() => handleSelectedSize(itemSize.name)}
-                    >
-                      {itemSize.name}
-                    </div>
-                  );
-                })}
+      {isLoading ? (
+        'Loading...'
+      ) : (
+        <div className={container}>
+          <MainLayout>
+            <div className={navigateSection}>
+              <div className={functionBox}>
+                <Link to='/'>Home</Link> <span> &gt; Shop</span>
               </div>
-              <div className={functionInfo}>
-                <div className={increaseAmount}>
-                  <div onClick={() => handleSetQuantity('decrement')}>-</div>
-                  <div>{quantity}</div>
-                  <div onClick={() => handleSetQuantity('increament')}>+</div>
+              <div
+                className={backLink}
+                onClick={() => handleBackPreviousPage()}
+              >
+                &lt; Return to previous pages
+              </div>
+            </div>
+
+            <div className={contentSection}>
+              <div className={imageBox}>
+                {dataImageDetail.map(src => handleRenderZoomImage(src))}
+              </div>
+              <div className={infoBox}>
+                <h1>Title Product</h1>
+                <p className={price}>$ 1.5534</p>
+                <p className={description}>
+                  Amet, elit tellus, nisi odio velit ut. Euismod sit arcu,
+                  quisque arcu purus orci leo.
+                </p>
+                <p className={description}>Size {sizeSelected} </p>
+                <div className={boxSize}>
+                  {tempDataSize.map((itemSize, index) => {
+                    return (
+                      <div
+                        key={index}
+                        className={classNames(size, {
+                          [active]: sizeSelected === itemSize.name,
+                        })}
+                        onClick={() => handleSelectedSize(itemSize.name)}
+                      >
+                        {itemSize.name}
+                      </div>
+                    );
+                  })}
                 </div>
-                <div className={boxBtn}>
+                <div className={functionInfo}>
+                  <div className={increaseAmount}>
+                    <div onClick={() => handleSetQuantity('decrement')}>-</div>
+                    <div>{quantity}</div>
+                    <div onClick={() => handleSetQuantity('increament')}>+</div>
+                  </div>
+                  <div className={boxBtn}>
+                    <MyButton
+                      content={'ADD TO CART'}
+                      customClassname={!sizeSelected && activeDisableBtn}
+                    />
+                  </div>
+                </div>
+
+                <div className={orSection}>
+                  <div></div>
+                  <span>OR</span>
+                  <div></div>
+                </div>
+
+                <div>
                   <MyButton
-                    content={'ADD TO CART'}
+                    content={'BUY NOW'}
                     customClassname={!sizeSelected && activeDisableBtn}
                   />
                 </div>
-              </div>
 
-              <div className={orSection}>
-                <div></div>
-                <span>OR</span>
-                <div></div>
-              </div>
+                <div className={addFunc}>
+                  <div>
+                    <FaRegHeart />
+                  </div>
+                  <div>
+                    <TfiReload />
+                  </div>
+                </div>
 
-              <div>
-                <MyButton
-                  content={'BUY NOW'}
-                  customClassname={!sizeSelected && activeDisableBtn}
-                />
-              </div>
+                <div>
+                  <PaymentMethod />
+                </div>
 
-              <div className={addFunc}>
-                <div>
-                  <FaRegHeart />
+                <div className={info}>
+                  <div>
+                    Brand: <span>Brand 03</span>
+                  </div>
+                  <div>
+                    SKU:<span> 87654</span>
+                  </div>
+                  <div>
+                    Category: <span>Men</span>
+                  </div>
                 </div>
-                <div>
-                  <TfiReload />
-                </div>
+                {dataAccordionMenu.map((item, index) => (
+                  <AccordionMenu
+                    key={index}
+                    titleMenu={item.titleMenu}
+                    contentJsx={item.content}
+                    onClick={() => handleSetMenuSelected(item.id)}
+                    isSelected={menuSelected === item.id}
+                  />
+                ))}
               </div>
-
-              <div>
-                <PaymentMethod />
-              </div>
-
-              <div className={info}>
-                <div>
-                  Brand: <span>Brand 03</span>
-                </div>
-                <div>
-                  SKU:<span> 87654</span>
-                </div>
-                <div>
-                  Category: <span>Men</span>
-                </div>
-              </div>
-              {dataAccordionMenu.map((item, index) => (
-                <AccordionMenu
-                  key={index}
-                  titleMenu={item.titleMenu}
-                  contentJsx={item.content}
-                  onClick={() => handleSetMenuSelected(item.id)}
-                  isSelected={menuSelected === item.id}
-                />
-              ))}
             </div>
-          </div>
 
-          {/* <div>
+            {/* <div>
             <h2>Related Product</h2>
 
             <div>
               <SliderCommon data={tempDataSlider} isProductItem showItem={4} />
             </div>
           </div> */}
-        </MainLayout>
-      </div>
+          </MainLayout>
+        </div>
+      )}
 
       <MyFooter />
     </div>

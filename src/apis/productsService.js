@@ -1,18 +1,5 @@
 import axiosClient from './axiosClient';
 
-// const getProducts = async query => {
-//   const { sortType, page, limit } = query;
-
-//   const queryLimit = limit === 'all' ? '' : `&limit=${limit}`;
-
-//   const res = await axiosClient.get(
-//     `/product?sortType=${sortType}&page=${page}${queryLimit}`
-//   );
-//   return res.data;
-// };
-
-// export { getProducts };
-
 const getProducts = async (query = {}) => {
   const { sortType, page, limit } = query;
   let queryString = '';
@@ -28,4 +15,9 @@ const getProducts = async (query = {}) => {
   return res.data;
 };
 
-export { getProducts };
+const getDetailProduct = async id => {
+  const res = await axiosClient.get(`/product/${id}`);
+  return res.data;
+};
+
+export { getProducts, getDetailProduct };
