@@ -16,6 +16,7 @@ import classNames from 'classnames';
 import { getDetailProduct, getRelatedProduct } from '@/apis/productsService';
 import SliderCommon from '@components/SliderCommon/SliderCommon';
 import LoadingTextCommon from '@components/LoadingTextCommon/LoadingTextCommon';
+import { toast } from 'react-toastify';
 
 const DetailProduct = () => {
   const {
@@ -40,6 +41,7 @@ const DetailProduct = () => {
     activeDisableBtn,
     loading,
     related,
+    emptyData,
   } = styles;
 
   const navigate = useNavigate();
@@ -108,7 +110,9 @@ const DetailProduct = () => {
       setData(data);
       setIsLoading(false);
     } catch (error) {
+      toast.error('Have error when loading data');
       console.log(error);
+      setData();
       setIsLoading(false);
     }
   };
@@ -121,9 +125,15 @@ const DetailProduct = () => {
 
       setIsLoading(false);
     } catch (error) {
+      toast.error('Have error when loading data');
       console.log(error);
+      setRelatedData([]);
       setIsLoading(false);
     }
+  };
+
+  const handleNavigateToShop = () => {
+    navigate('/shop');
   };
 
   useEffect(() => {
@@ -153,101 +163,123 @@ const DetailProduct = () => {
               <LoadingTextCommon />
             </div>
           ) : (
-            <div className={contentSection}>
-              <div className={imageBox}>
-                {data?.images.map(src => handleRenderZoomImage(src))}
-              </div>
-              <div className={infoBox}>
-                <h1>{data?.name}</h1>
-                <p className={price}>$ {data?.price}</p>
-                <p className={description}>{data?.description}</p>
-                <p className={description}>Size {sizeSelected} </p>
-                <div className={boxSize}>
-                  {data?.size.map((itemSize, index) => {
-                    return (
-                      <div
-                        key={index}
-                        className={classNames(size, {
-                          [active]: sizeSelected === itemSize.name,
-                        })}
-                        onClick={() => handleSelectedSize(itemSize.name)}
-                      >
-                        {itemSize.name}
-                      </div>
-                    );
-                  })}
-                </div>
-                <div className={functionInfo}>
-                  <div className={increaseAmount}>
-                    <div onClick={() => handleSetQuantity('decrement')}>-</div>
-                    <div>{quantity}</div>
-                    <div onClick={() => handleSetQuantity('increament')}>+</div>
-                  </div>
-                  <div className={boxBtn}>
+            <>
+              {!data ? (
+                <div className={emptyData}>
+                  <p>No products</p>
+                  <div>
                     <MyButton
-                      content={'ADD TO CART'}
-                      customClassname={!sizeSelected && activeDisableBtn}
+                      onClick={handleNavigateToShop}
+                      content={'BACK TO SHOP'}
                     />
                   </div>
                 </div>
-
-                <div className={orSection}>
-                  <div></div>
-                  <span>OR</span>
-                  <div></div>
-                </div>
-
-                <div>
-                  <MyButton
-                    content={'BUY NOW'}
-                    customClassname={!sizeSelected && activeDisableBtn}
-                  />
-                </div>
-
-                <div className={addFunc}>
-                  <div>
-                    <FaRegHeart />
+              ) : (
+                <div className={contentSection}>
+                  <div className={imageBox}>
+                    {data?.images.map(src => handleRenderZoomImage(src))}
                   </div>
-                  <div>
-                    <TfiReload />
-                  </div>
-                </div>
+                  <div className={infoBox}>
+                    <h1>{data?.name}</h1>
+                    <p className={price}>$ {data?.price}</p>
+                    <p className={description}>{data?.description}</p>
+                    <p className={description}>Size {sizeSelected} </p>
+                    <div className={boxSize}>
+                      {data?.size.map((itemSize, index) => {
+                        return (
+                          <div
+                            key={index}
+                            className={classNames(size, {
+                              [active]: sizeSelected === itemSize.name,
+                            })}
+                            onClick={() => handleSelectedSize(itemSize.name)}
+                          >
+                            {itemSize.name}
+                          </div>
+                        );
+                      })}
+                    </div>
+                    <div className={functionInfo}>
+                      <div className={increaseAmount}>
+                        <div onClick={() => handleSetQuantity('decrement')}>
+                          -
+                        </div>
+                        <div>{quantity}</div>
+                        <div onClick={() => handleSetQuantity('increament')}>
+                          +
+                        </div>
+                      </div>
+                      <div className={boxBtn}>
+                        <MyButton
+                          content={'ADD TO CART'}
+                          customClassname={!sizeSelected && activeDisableBtn}
+                        />
+                      </div>
+                    </div>
 
-                <div>
-                  <PaymentMethod />
-                </div>
+                    <div className={orSection}>
+                      <div></div>
+                      <span>OR</span>
+                      <div></div>
+                    </div>
 
-                <div className={info}>
-                  <div>
-                    Brand: <span>Brand 03</span>
-                  </div>
-                  <div>
-                    SKU:<span> 87654</span>
-                  </div>
-                  <div>
-                    Category: <span>Men</span>
+                    <div>
+                      <MyButton
+                        content={'BUY NOW'}
+                        customClassname={!sizeSelected && activeDisableBtn}
+                      />
+                    </div>
+
+                    <div className={addFunc}>
+                      <div>
+                        <FaRegHeart />
+                      </div>
+                      <div>
+                        <TfiReload />
+                      </div>
+                    </div>
+
+                    <div>
+                      <PaymentMethod />
+                    </div>
+
+                    <div className={info}>
+                      <div>
+                        Brand: <span>Brand 03</span>
+                      </div>
+                      <div>
+                        SKU:<span> 87654</span>
+                      </div>
+                      <div>
+                        Category: <span>Men</span>
+                      </div>
+                    </div>
+                    {dataAccordionMenu.map((item, index) => (
+                      <AccordionMenu
+                        key={index}
+                        titleMenu={item.titleMenu}
+                        contentJsx={item.content}
+                        onClick={() => handleSetMenuSelected(item.id)}
+                        isSelected={menuSelected === item.id}
+                      />
+                    ))}
                   </div>
                 </div>
-                {dataAccordionMenu.map((item, index) => (
-                  <AccordionMenu
-                    key={index}
-                    titleMenu={item.titleMenu}
-                    contentJsx={item.content}
-                    onClick={() => handleSetMenuSelected(item.id)}
-                    isSelected={menuSelected === item.id}
-                  />
-                ))}
-              </div>
-            </div>
+              )}
+            </>
           )}
 
-          <div>
-            <h2 className={related}>Related Product</h2>
-
+          {relatedData.length ? (
             <div>
-              <SliderCommon data={relatedData} isProductItem showItem={3} />
+              <h2 className={related}>Related Product</h2>
+
+              <div>
+                <SliderCommon data={relatedData} isProductItem showItem={3} />
+              </div>
             </div>
-          </div>
+          ) : (
+            <></>
+          )}
         </MainLayout>
       </div>
 
