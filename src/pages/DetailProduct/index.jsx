@@ -42,6 +42,7 @@ const DetailProduct = () => {
     loading,
     related,
     emptyData,
+    buynowBtn,
   } = styles;
 
   const navigate = useNavigate();
@@ -223,7 +224,7 @@ const DetailProduct = () => {
                       <div></div>
                     </div>
 
-                    <div>
+                    <div className={buynowBtn}>
                       <MyButton
                         content={'BUY NOW'}
                         customClassname={!sizeSelected && activeDisableBtn}
