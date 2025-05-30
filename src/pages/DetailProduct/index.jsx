@@ -11,8 +11,23 @@ import { useState } from 'react';
 import { FaRegHeart } from 'react-icons/fa';
 import { TfiReload } from 'react-icons/tfi';
 import styles from './styles.module.scss';
-import SliderCommon from '@components/SliderCommon/SliderCommon';
 import ReactImageMagnifier from 'simple-image-magnifier/react';
+import classNames from 'classnames';
+
+const tempDataSize = [
+  {
+    name: 'L',
+    amount: '100',
+  },
+  {
+    name: 'M',
+    amount: '100',
+  },
+  {
+    name: 'S',
+    amount: '100',
+  },
+];
 
 const DetailProduct = () => {
   const {
@@ -33,6 +48,8 @@ const DetailProduct = () => {
     orSection,
     addFunc,
     info,
+    active,
+    activeDisableBtn,
   } = styles;
 
   const navigate = useNavigate();
@@ -42,6 +59,8 @@ const DetailProduct = () => {
   };
 
   const [menuSelected, setMenuSelected] = useState(1);
+  const [sizeSelected, setSizeSelected] = useState('');
+  const [quantity, setQuantity] = useState(1);
 
   const dataAccordionMenu = [
     {
@@ -76,6 +95,21 @@ const DetailProduct = () => {
 
   const handleSetMenuSelected = id => {
     setMenuSelected(id);
+  };
+
+  const handleSelectedSize = size => {
+    if (sizeSelected === size) {
+      setSizeSelected('');
+    } else {
+      setSizeSelected(size);
+    }
+  };
+
+  const handleSetQuantity = type => {
+    if (quantity < 1) return;
+    setQuantity(prev =>
+      type === 'increament' ? (prev += 1) : quantity === 1 ? 1 : (prev -= 1)
+    );
   };
 
   const tempDataSlider = [
@@ -128,20 +162,33 @@ const DetailProduct = () => {
                 Amet, elit tellus, nisi odio velit ut. Euismod sit arcu, quisque
                 arcu purus orci leo.
               </p>
-              <p className={description}>Size</p>
+              <p className={description}>Size {sizeSelected} </p>
               <div className={boxSize}>
-                <div className={size}>L</div>
-                <div className={size}>M</div>
-                <div className={size}>S</div>
+                {tempDataSize.map((itemSize, index) => {
+                  return (
+                    <div
+                      key={index}
+                      className={classNames(size, {
+                        [active]: sizeSelected === itemSize.name,
+                      })}
+                      onClick={() => handleSelectedSize(itemSize.name)}
+                    >
+                      {itemSize.name}
+                    </div>
+                  );
+                })}
               </div>
               <div className={functionInfo}>
                 <div className={increaseAmount}>
-                  <div>-</div>
-                  <div>1</div>
-                  <div>+</div>
+                  <div onClick={() => handleSetQuantity('decrement')}>-</div>
+                  <div>{quantity}</div>
+                  <div onClick={() => handleSetQuantity('increament')}>+</div>
                 </div>
                 <div className={boxBtn}>
-                  <MyButton content={'ADD TO CART'} />
+                  <MyButton
+                    content={'ADD TO CART'}
+                    customClassname={!sizeSelected && activeDisableBtn}
+                  />
                 </div>
               </div>
 
@@ -152,7 +199,10 @@ const DetailProduct = () => {
               </div>
 
               <div>
-                <MyButton content={'BUY NOW'} />
+                <MyButton
+                  content={'BUY NOW'}
+                  customClassname={!sizeSelected && activeDisableBtn}
+                />
               </div>
 
               <div className={addFunc}>
