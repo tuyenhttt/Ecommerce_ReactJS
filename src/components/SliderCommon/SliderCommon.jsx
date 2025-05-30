@@ -19,25 +19,28 @@ const SliderCommon = ({ data, isProductItem = false, showItem = 1 }) => {
 
   return (
     <Slider {...settings}>
-      {data.map((item, index) => {
-        return (
-          <>
-            {isProductItem ? (
-              <ProductItem
-                src={item.image}
-                prevSrc={item.image}
-                name={item.name}
-                price={item.price}
-                details={item}
-                isHomePage={false}
-                slideItem
-              />
-            ) : (
-              <img src={item} key={index} alt='test' />
-            )}
-          </>
-        );
-      })}
+      {Array.isArray(data) &&
+        data.map((item, index) => {
+          const src = !item.image ? item.images?.[0] : item.image;
+
+          return (
+            <div key={index}>
+              {isProductItem ? (
+                <ProductItem
+                  src={src}
+                  prevSrc={src}
+                  name={item.name}
+                  price={item.price}
+                  details={item}
+                  isHomePage={false}
+                  slideItem
+                />
+              ) : (
+                <img src={item} alt='test' />
+              )}
+            </div>
+          );
+        })}
     </Slider>
   );
 };

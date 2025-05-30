@@ -13,7 +13,7 @@ import { TfiReload } from 'react-icons/tfi';
 import styles from './styles.module.scss';
 import ReactImageMagnifier from 'simple-image-magnifier/react';
 import classNames from 'classnames';
-import { getDetailProduct } from '@/apis/productsService';
+import { getDetailProduct, getRelatedProduct } from '@/apis/productsService';
 import SliderCommon from '@components/SliderCommon/SliderCommon';
 import LoadingTextCommon from '@components/LoadingTextCommon/LoadingTextCommon';
 
@@ -39,6 +39,7 @@ const DetailProduct = () => {
     active,
     activeDisableBtn,
     loading,
+    related,
   } = styles;
 
   const navigate = useNavigate();
@@ -52,6 +53,7 @@ const DetailProduct = () => {
   const [quantity, setQuantity] = useState(1);
   const [data, setData] = useState();
   const [isLoading, setIsLoading] = useState(false);
+  const [relatedData, setRelatedData] = useState([]);
 
   const param = useParams();
 
@@ -98,35 +100,24 @@ const DetailProduct = () => {
     );
   };
 
-  const tempDataSlider = [
-    {
-      image:
-        'https://xstore.b-cdn.net/elementor2/marseille04/wp-content/uploads/sites/2/2022/12/Image-13.1-min.jpg',
-      name: ' Tesst 1',
-      price: '1000',
-      size: [{ name: 'L' }, { name: 'M' }, { name: 'S' }],
-    },
-    {
-      image:
-        'https://xstore.b-cdn.net/elementor2/marseille04/wp-content/uploads/sites/2/2022/12/Image-13.1-min.jpg',
-      name: ' Tesst 1',
-      price: '1000',
-      size: [{ name: 'L' }, { name: 'M' }, { name: 'S' }],
-    },
-    {
-      image:
-        'https://xstore.b-cdn.net/elementor2/marseille04/wp-content/uploads/sites/2/2022/12/Image-13.1-min.jpg',
-      name: ' Tesst 1',
-      price: '1000',
-      size: [{ name: 'L' }, { name: 'M' }, { name: 'S' }],
-    },
-  ];
-
   const fetchDataDetail = async id => {
     setIsLoading(true);
     try {
       const data = await getDetailProduct(id);
+
       setData(data);
+      setIsLoading(false);
+    } catch (error) {
+      console.log(error);
+      setIsLoading(false);
+    }
+  };
+
+  const fetchDataRelatedProduct = async id => {
+    setIsLoading(true);
+    try {
+      const data = await getRelatedProduct(id);
+      setRelatedData(data);
 
       setIsLoading(false);
     } catch (error) {
@@ -138,6 +129,7 @@ const DetailProduct = () => {
   useEffect(() => {
     if (param.id) {
       fetchDataDetail(param.id);
+      fetchDataRelatedProduct(param.id);
     }
   }, [param]);
 
@@ -250,10 +242,10 @@ const DetailProduct = () => {
           )}
 
           <div>
-            <h2>Related Product</h2>
+            <h2 className={related}>Related Product</h2>
 
             <div>
-              <SliderCommon data={tempDataSlider} isProductItem showItem={3} />
+              <SliderCommon data={relatedData} isProductItem showItem={3} />
             </div>
           </div>
         </MainLayout>
