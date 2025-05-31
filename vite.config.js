@@ -13,6 +13,7 @@ export default defineConfig({
       '@icons': path.resolve(__dirname, 'src/assets/icons'),
       '@pages': path.resolve(__dirname, 'src/pages'),
       '@contexts': path.resolve(__dirname, 'src/contexts'),
+      '@utils': path.resolve(__dirname, 'src/utils'),
     },
   },
 });

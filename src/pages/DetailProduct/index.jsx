@@ -7,7 +7,7 @@ import AccordionMenu from '@components/AccordionMenu';
 import Information from '@/pages/DetailProduct/components/Information';
 import ReviewProduct from '@/pages/DetailProduct/components/Review';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { FaRegHeart } from 'react-icons/fa';
 import { TfiReload } from 'react-icons/tfi';
 import styles from './styles.module.scss';
@@ -17,6 +17,9 @@ import { getDetailProduct, getRelatedProduct } from '@/apis/productsService';
 import SliderCommon from '@components/SliderCommon/SliderCommon';
 import LoadingTextCommon from '@components/LoadingTextCommon/LoadingTextCommon';
 import { toast } from 'react-toastify';
+import { handleAddProductToCart } from '@utils/helper';
+import { SideBarContext } from '@/contexts/SideBarProvider';
+import Cookies from 'js-cookie';
 
 const DetailProduct = () => {
   const {
@@ -46,6 +49,11 @@ const DetailProduct = () => {
   } = styles;
 
   const navigate = useNavigate();
+
+  const { setIsOpen, setType, handleGetListProductsCart, setDetailProduct } =
+    useContext(SideBarContext);
+
+  const userId = Cookies.get('userId');
 
   const handleBackPreviousPage = () => {
     navigate(-1);
@@ -137,6 +145,19 @@ const DetailProduct = () => {
     navigate('/shop');
   };
 
+  const handleAdd = () => {
+    handleAddProductToCart(
+      userId,
+      setIsOpen,
+      setType,
+      sizeSelected,
+      param.id,
+      quantity,
+      setIsLoading,
+      handleGetListProductsCart
+    );
+  };
+
   useEffect(() => {
     if (param.id) {
       fetchDataDetail(param.id);
@@ -213,6 +234,7 @@ const DetailProduct = () => {
                       <div className={boxBtn}>
                         <MyButton
                           content={'ADD TO CART'}
+                          onClick={handleAdd}
                           customClassname={!sizeSelected && activeDisableBtn}
                         />
                       </div>
