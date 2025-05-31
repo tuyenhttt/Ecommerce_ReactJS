@@ -9,6 +9,7 @@ import { SideBarContext } from '@/contexts/SideBarProvider';
 import { TfiReload } from 'react-icons/tfi';
 import { FaRegHeart } from 'react-icons/fa';
 import { LuShoppingCart } from 'react-icons/lu';
+import { StoreContext } from '@/contexts/storeProvider';
 
 function MyHeader() {
   const {
@@ -35,6 +36,8 @@ function MyHeader() {
     handleGetListProductsCart,
   } = useContext(SideBarContext);
 
+  const { userInfo } = useContext(StoreContext);
+
   const handleOpenSideBar = type => {
     setIsOpen(true);
     setType(type);
@@ -44,6 +47,12 @@ function MyHeader() {
     handleGetListProductsCart(userId, 'cart');
     handleOpenSideBar('cart');
   };
+
+  const totalItemCart = listProductCart.length
+    ? listProductCart.reduce((acc, item) => {
+        return (acc += item.quantity);
+      }, 0)
+    : 0;
 
   useEffect(() => {
     // setFixedPosition(scrollPosition > 80 ? true : false);
@@ -98,7 +107,9 @@ function MyHeader() {
                 style={{ fontSize: '25px' }}
                 onClick={() => handleOpenCartSideBar()}
               />
-              <div className={quantity}>{listProductCart.length}</div>
+              <div className={quantity}>
+                {totalItemCart || userInfo?.amountCart || 0}
+              </div>
             </div>
           </div>
         </div>
