@@ -20,6 +20,7 @@ import { toast } from 'react-toastify';
 import { handleAddProductToCart } from '@utils/helper';
 import { SideBarContext } from '@/contexts/SideBarProvider';
 import Cookies from 'js-cookie';
+import { addProductToCart } from '@/apis/cartService';
 
 const DetailProduct = () => {
   const {
@@ -158,6 +159,26 @@ const DetailProduct = () => {
     );
   };
 
+  const handleBuyNow = () => {
+    const data = {
+      userId,
+      productId: param.id,
+      quantity,
+      size: sizeSelected,
+    };
+    addProductToCart(data)
+      .then(res => {
+        toast.success('Add product to cart successfully');
+        setIsLoading(false);
+        navigate('/cart');
+      })
+      .catch(err => {
+        console.log(err);
+        toast.error('Add product to cart failed');
+        setIsLoading(false);
+      });
+  };
+
   useEffect(() => {
     if (param.id) {
       fetchDataDetail(param.id);
@@ -249,6 +270,7 @@ const DetailProduct = () => {
                     <div className={buynowBtn}>
                       <MyButton
                         content={'BUY NOW'}
+                        onClick={handleBuyNow}
                         customClassname={!sizeSelected && activeDisableBtn}
                       />
                     </div>

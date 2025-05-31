@@ -3,16 +3,22 @@ import CartSummary from '@/pages/Cart/components/Contents/CartSummary';
 import styles from '../../styles.module.scss';
 import MyButton from '@components/Button/Button';
 import { FiTrash2 } from 'react-icons/fi';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { SideBarContext } from '@/contexts/SideBarProvider';
 import { addProductToCart } from '@/apis/cartService';
 import { deleteItem, deleteCart } from '@/apis/cartService';
 import { IoMdCart } from 'react-icons/io';
 import { useNavigate } from 'react-router-dom';
+import { getCart } from '@/apis/cartService';
 
 const Contents = () => {
-  const { listProductCart, handleGetListProductsCart, setIsLoading, userId } =
-    useContext(SideBarContext);
+  const {
+    listProductCart,
+    handleGetListProductsCart,
+    setIsLoading,
+    userId,
+    setListProductCart,
+  } = useContext(SideBarContext);
 
   const navigate = useNavigate();
 
@@ -62,6 +68,18 @@ const Contents = () => {
   const handleNavigateShop = () => {
     navigate('/shop');
   };
+
+  useEffect(() => {
+    getCart(userId)
+      .then(res => {
+        setListProductCart(res.data.data);
+        setIsLoading(false);
+      })
+      .catch(err => {
+        setListProductCart([]);
+        setIsLoading(false);
+      });
+  }, []);
 
   return (
     <>

@@ -27,10 +27,6 @@ export const SideBarProvider = ({ children }) => {
     }
   };
 
-  useEffect(() => {
-    handleGetListProductsCart(userId, 'cart');
-  }, []);
-
   const clearCart = () => {
     setListProductCart([]);
   };
@@ -48,6 +44,7 @@ export const SideBarProvider = ({ children }) => {
     clearCart,
     setDetailProduct,
     setIsLoading,
+    setListProductCart,
   };
 
   return (

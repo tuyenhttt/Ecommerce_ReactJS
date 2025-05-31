@@ -27,11 +27,22 @@ function MyHeader() {
   const { scrollPosition } = useScrollHandling();
   const [fixedPosition, setFixedPosition] = useState(false);
 
-  const { setIsOpen, setType, listProductCart } = useContext(SideBarContext);
+  const {
+    setIsOpen,
+    setType,
+    listProductCart,
+    userId,
+    handleGetListProductsCart,
+  } = useContext(SideBarContext);
 
   const handleOpenSideBar = type => {
     setIsOpen(true);
     setType(type);
+  };
+
+  const handleOpenCartSideBar = () => {
+    handleGetListProductsCart(userId, 'cart');
+    handleOpenSideBar('cart');
   };
 
   useEffect(() => {
@@ -85,7 +96,7 @@ function MyHeader() {
             <div className={boxCart}>
               <LuShoppingCart
                 style={{ fontSize: '25px' }}
-                onClick={() => handleOpenSideBar('cart')}
+                onClick={() => handleOpenCartSideBar()}
               />
               <div className={quantity}>{listProductCart.length}</div>
             </div>
