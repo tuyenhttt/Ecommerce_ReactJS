@@ -1,4 +1,3 @@
-import MyHeader from '@components/Header/Header';
 import MainLayout from '@components/Layout/Layout';
 import styles from './styles.module.scss';
 import { Link, useNavigate } from 'react-router-dom';
@@ -6,7 +5,6 @@ import Banner from '@/pages/OurShop/components/Banner';
 import { OurShopProvider } from '@contexts/OurShopProvider';
 import Filter from '@/pages/OurShop/components/Filter';
 import ListProduct from '@/pages/OurShop/components/ListProduct';
-import MyFooter from '@components/Footer/Footer';
 
 const OurShop = () => {
   const { container, functionBox, backLink } = styles;
@@ -18,7 +16,6 @@ const OurShop = () => {
 
   return (
     <OurShopProvider>
-      <MyHeader />
       <MainLayout>
         <div className={container}>
           <div className={functionBox}>
@@ -37,7 +34,6 @@ const OurShop = () => {
           <ListProduct />
         </div>
       </MainLayout>
-      <MyFooter />
     </OurShopProvider>
   );
 };

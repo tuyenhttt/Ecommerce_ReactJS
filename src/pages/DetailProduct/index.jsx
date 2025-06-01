@@ -1,5 +1,3 @@
-import MyFooter from '@components/Footer/Footer';
-import MyHeader from '@components/Header/Header';
 import MainLayout from '@components/Layout/Layout';
 import MyButton from '@components/Button/Button';
 import PaymentMethod from '@components/PaymentMethos/PaymentMethod';
@@ -188,8 +186,6 @@ const DetailProduct = () => {
 
   return (
     <div>
-      <MyHeader />
-
       <div className={container}>
         <MainLayout>
           <div className={navigateSection}>
@@ -327,8 +323,6 @@ const DetailProduct = () => {
           )}
         </MainLayout>
       </div>
-
-      <MyFooter />
     </div>
   );
 };

@@ -5,6 +5,8 @@ import SideBar from '@components/SideBar/SideBar';
 import { SideBarProvider } from '@/contexts/SideBarProvider';
 import { StoreProvider } from '@/contexts/storeProvider';
 import { ToastContainer } from 'react-toastify';
+import MyHeader from '@components/Header/Header';
+import MyFooter from '@components/Footer/Footer';
 
 function App() {
   return (
@@ -12,6 +14,7 @@ function App() {
       <SideBarProvider>
         <div>
           <BrowserRouter>
+            <MyHeader />
             <SideBar />
             <Suspense
               fallback={
@@ -40,6 +43,7 @@ function App() {
                 })}
               </Routes>
             </Suspense>
+            <MyFooter />
           </BrowserRouter>
         </div>
         <ToastContainer position='top-right' autoClose={2000} />
