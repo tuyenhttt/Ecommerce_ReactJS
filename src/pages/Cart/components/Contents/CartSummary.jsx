@@ -4,6 +4,8 @@ import classNames from 'classnames';
 import { useContext } from 'react';
 import { SideBarContext } from '@/contexts/SideBarProvider';
 import PaymentMethod from '@components/PaymentMethos/PaymentMethod';
+import { StepperContext } from '@/contexts/StepperProvider';
+import { useNavigate } from 'react-router-dom';
 
 const CartSummary = () => {
   const {
@@ -18,10 +20,21 @@ const CartSummary = () => {
   } = styles;
 
   const { listProductCart } = useContext(SideBarContext);
+  const { setCurrentStep } = useContext(StepperContext);
+
+  const navigate = useNavigate();
 
   const total = parseFloat(
     listProductCart.reduce((acc, item) => acc + item.total, 0).toFixed(2)
   );
+
+  const handleProcessCheckout = () => {
+    setCurrentStep(2);
+  };
+
+  const handleContinueShopping = () => {
+    navigate('/shop');
+  };
 
   return (
     <>
@@ -36,9 +49,16 @@ const CartSummary = () => {
           <div>$ {total}</div>
         </div>
         <div className={buttonWrapper}>
-          <MyButton content={'PROCESS TO CHECKOUT'} />
+          <MyButton
+            content={'PROCESS TO CHECKOUT'}
+            onClick={handleProcessCheckout}
+          />
           <div className={space}></div>
-          <MyButton content={'CONTINUE SHOPPING'} isPrimary={false} />
+          <MyButton
+            content={'CONTINUE SHOPPING'}
+            isPrimary={false}
+            onClick={handleContinueShopping}
+          />
         </div>
       </div>
       <PaymentMethod />

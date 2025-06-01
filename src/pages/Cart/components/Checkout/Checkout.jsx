@@ -1,12 +1,12 @@
 import InputCustom from '@components/InputCommon2/Input';
 import { useForm } from 'react-hook-form';
-import styles from './Styles.module.scss';
 import cls from 'classnames';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import axios from 'axios';
 import RightBody from '@/pages/Cart/components/Checkout/RightBody';
 import { useRef } from 'react';
+import styles from './styles.module.scss';
 
 const CN_BASE = 'https://countriesnow.space/api/v0.1';
 
@@ -170,10 +170,7 @@ function Checkout() {
             <InputCustom
               label={'Town / City'}
               dataOptions={cities}
-              isRequired
-              register={register('cities', {
-                required: true,
-              })}
+              register={register('cities')}
             />
           </div>
 
@@ -181,10 +178,7 @@ function Checkout() {
             <InputCustom
               label={'State'}
               dataOptions={states}
-              isRequired
-              register={register('state', {
-                required: true,
-              })}
+              register={register('state')}
             />
           </div>
 
