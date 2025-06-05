@@ -21,6 +21,14 @@ function Menu({ content, href }) {
     if (content === 'Our Shop') {
       navigate('/shop');
     }
+
+    if (content === 'About us') {
+      navigate('/about-us');
+    }
+
+    if (content === 'Contacts') {
+      navigate('/contact');
+    }
   };
 
   const handleRenderText = content => {

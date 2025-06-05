@@ -166,21 +166,21 @@ function Checkout() {
             />
           </div>
 
-          <div className={row}>
+          {/* <div className={row}>
             <InputCustom
               label={'Town / City'}
               dataOptions={cities}
               register={register('cities')}
             />
-          </div>
+          </div> */}
 
-          <div className={row}>
+          {/* <div className={row}>
             <InputCustom
               label={'State'}
               dataOptions={states}
               register={register('state')}
             />
-          </div>
+          </div> */}
 
           <div className={row}>
             <InputCustom
@@ -214,8 +214,6 @@ function Checkout() {
               })}
             />
           </div>
-
-          {/* <button type="submit">Submit</button> */}
         </form>
       </div>
 
